@@ -1,91 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Whiscraft — Digital Design Vault</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-            --cobalt: #1A56FF; --cobalt-dim: rgba(26,86,255,0.08); --black: #0A0A0A;
-            --gray-200: #E8E8E8; --gray-500: #6B6B6B; --white: #FFFFFF;
-            --font-display: 'Cormorant Garamond', serif; --font-body: 'DM Sans', sans-serif;
-        }
-        html { font-family: var(--font-body); background: var(--white); color: var(--black); }
-        .nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--gray-200); padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
-        .hero-strip { padding: 60px 32px; border-bottom: 1px solid var(--gray-200); text-align: center; }
-        .hero-title { font-family: var(--font-display); font-size: 64px; font-weight: 300; letter-spacing: -0.02em; }
-        .single-product-wrap { display: flex; justify-content: center; padding: 60px 20px; }
-        .card { width: 100%; max-width: 450px; border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; cursor: pointer; transition: transform 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .card-img { width: 100%; display: block; }
-        .card-info { padding: 20px; text-align: left; }
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .modal { background: white; border-radius: 20px; max-width: 900px; width: 100%; display: flex; overflow: hidden; }
-        .btn-buy { background: var(--cobalt); color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none; display: block; text-align: center; margin-top: 20px; }
-    </style>
-</head>
-<body>
-    <div id="root"></div>
-    <script type="text/babel">
-        const { useState } = React;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Whiscraft — Digital Design Vault</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cobalt: #1A56FF;
+    --cobalt-dim: rgba(26,86,255,0.08);
+    --cobalt-border: rgba(26,86,255,0.2);
+    --black: #0A0A0A;
+    --gray-800: #1C1C1C;
+    --gray-500: #6B6B6B;
+    --gray-200: #E8E8E8;
+    --gray-50: #F7F7F7;
+    --white: #FFFFFF;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+  html { font-family: var(--font-body); background: var(--white); color: var(--black); }
+  body { min-height: 100vh; }
+  #root { min-height: 100vh; }
 
-        const App = () => {
-            const [open, setOpen] = useState(false);
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
 
-            // DATA SECTION - CAREFUL EDITING HERE
-            const product = {
-                title: "Signature Camo Essential",
-                image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800", // CHANGE TO YOUR IMG LINK
-                amazon: "https://amazon.com", // CHANGE TO YOUR TRACKING LINK
-                desc: "Debut collection. Oversized fit, premium breathable cotton."
-            };
+  .fade-up { animation: fadeUp 0.5s ease both; }
+  .fade-in { animation: fadeIn 0.3s ease both; }
+  .scale-in { animation: scaleIn 0.35s cubic-bezier(0.16,1,0.3,1) both; }
 
-            return (
-                <div>
-                    <nav className="nav">
-                        <div style={{fontWeight:'bold'}}>WHISCRAFT</div>
-                        <div style={{fontSize:'12px', color:'#666'}}>THE VAULT</div>
-                    </nav>
+  /* Nav */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 32px;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 500; letter-spacing: -0.02em;
+    color: var(--black); text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .vault-badge {
+    width: 20px; height: 20px;
+    background: var(--cobalt); border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .vault-badge svg { width: 11px; height: 11px; color: white; }
+  .nav-cats { display: flex; gap: 2px; }
+  .cat-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--font-body); font-size: 12px; font-weight: 400;
+    color: var(--gray-500); padding: 6px 14px; border-radius: 100px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .cat-btn:hover { color: var(--black); background: var(--gray-50); }
+  .cat-btn.active { color: var(--cobalt); background: var(--cobalt-dim); font-weight: 500; }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .collection-link {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--gray-500);
+    text-decoration: none; cursor: pointer; background: none; border: none;
+    transition: color 0.2s;
+  }
+  .collection-link:hover { color: var(--black); }
+  .avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--gray-200); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500; color: var(--gray-500);
+    border: 1.5px solid var(--gray-200); transition: border-color 0.2s;
+  }
+  .avatar:hover { border-color: var(--cobalt); }
 
-                    <div className="hero-strip">
-                        <h1 className="hero-title">The Design Vault.</h1>
-                    </div>
+  /* Hero strip */
+  .hero-strip {
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: flex-end; justify-content: space-between;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 300; line-height: 1; letter-spacing: -0.03em;
+    color: var(--black);
+  }
+  .hero-title em { font-style: italic; color: var(--cobalt); }
+  .hero-sub {
+    font-size: 12px; color: var(--gray-500); max-width: 220px;
+    text-align: right; line-height: 1.7; letter-spacing: 0.01em;
+  }
 
-                    <div className="single-product-wrap">
-                        <div className="card" onClick={() => setOpen(true)}>
-                            <img src={product.image} className="card-img" />
-                            <div className="card-info">
-                                <h3>{product.title}</h3>
-                                <p style={{color:'#666', fontSize:'14px'}}>Lifestyle</p>
-                            </div>
-                        </div>
-                    </div>
+  /* Grid */
+  .grid-wrap { padding: 32px; }
+  .masonry { columns: 4; column-gap: 16px; }
+  @media (max-width: 1100px) { .masonry { columns: 3; } }
+  @media (max-width: 750px) { .masonry { columns: 2; } }
 
-                    {open && (
-                        <div className="modal-overlay" onClick={() => setOpen(false)}>
-                            <div className="modal" onClick={e => e.stopPropagation()}>
-                                <div style={{flex:1}}><img src={product.image} style={{width:'100%'}}/></div>
-                                <div style={{flex:1, padding:'40px'}}>
-                                    <h2>{product.title}</h2>
-                                    <p style={{marginTop:'20px', color:'#666'}}>{product.desc}</p>
-                                    <a href={product.amazon} target="_blank" className="btn-buy">ORDER NOW</a>
-                                    <button onClick={() => setOpen(false)} style={{marginTop:'20px', background:'none', border:'none', cursor:'pointer', color:'#999'}}>Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            );
-        };
+  /* Card */
+  .card {
+    break-inside: avoid; margin-bottom: 16px;
+    cursor: pointer; position: relative;
+    border-radius: 10px; overflow: hidden;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+  .card-img { width: 100%; display: block; object-fit: cover; background: var(--gray-50); }
+  .card-placeholder {
+    width: 100%; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 32px; font-weight: 300;
+    color: var(--gray-200); background: var(--gray-50);
+  }
+  .media-badge {
+    position: absolute; top: 10px; left: 10px;
+    padding: 3px 9px; border-radius: 100px;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.05em;
+    text-transform: uppercase; backdrop-filter: blur(8px);
+  }
+  .badge-video { background: rgba(10,10,10,0.75); color: white; }
+  .badge-slides { background: rgba(26,86,255,0.9); color: white; }
+  .badge-original { background: rgba(255,255,255,0.9); color: var(--black); border: 1px solid var(--gray-200); }
+  .premium-dot {
+    position: absolute; top: 10px; right: 10px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--cobalt);
+  }
+  .card-foot { padding: 12px 14px; border-top: 1px solid var(--gray-200); }
+  .card-title {
+    font-size: 13px; font-weight: 400; color: var(--black);
+    letter-spacing: -0.01em; margin-bottom: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .card-cat { font-size: 10px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.05em; }
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-</body>
-</html>
+  /* Modal overlay */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px; animation: fadeIn 0.25s ease;
+  }
+  .modal {
+    background: var(--white);
+    border-radius: 16px; overflow: hidden;
+    width: 100%; max-width: 1000px; max-height: 90vh;
+    display: flex; flex-direction: row;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.25);
+    animation: scaleIn 0.35s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  /* Modal left */
+  .modal-left {
+    flex: 1.2; background: var(--gray-50);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 500px; position: relative; overflow: hidden;
+  }
+  .modal-media { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .modal-placeholder {
+    width: 100%; height: 100%; min-height: 400px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 64px;
+    font-weight: 300; color: var(--gray-200);
+    background: linear-gradient(135deg, #F0F0F0 0%, #E8E8E8 100%);
+  }
+  .slide-nav {
+    position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px;
+  }
+  .slide-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.5); cursor: pointer;
+    transition: all 0.2s; border: none;
+  }
+  .slide-dot.active { background: white; width: 18px; border-radius: 3px; }
+  .slide-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.9); border: none; cursor: pointer;
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12); transition: all 0.2s;
+    color: var(--black);
+  }
+  .slide-arrow:hover { background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+  .slide-arrow.left { left: 12px; }
+  .slide-arrow.right { right: 12px; }
+
+  /* Modal right */
+  .modal-right {
+    width: 360px; flex-shrink: 0;
+    display: flex; flex-direction: column;
+    overflow-y: auto; border-left: 1px solid var(--gray-200);
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: rgba(255,255,255,0.9); border: none; cursor: pointer;
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.2s;
+    color: var(--black); z-index: 10;
+  }
+  .modal-close:hover { transform: scale(1.05); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+  .modal-head { padding: 24px 24px 0; }
+  .modal-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--cobalt); font-weight: 500; margin-bottom: 10px;
+  }
+  .modal-title {
+    font-family: var(--font-display);
+    font-size: 26px; font-weight: 400; line-height: 1.1;
+    letter-spacing: -0.02em; color: var(--black); margin-bottom: 6px;
+  }
+  .modal-cat { font-size: 11px; color: var(--gray-500); letter-spacing: 0.04em; text-transform: uppercase; }
+
+  /* CTAs */
+  .cta-area { padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; }
+  .btn-primary {
+    width: 100%; padding: 13px; border-radius: 8px;
+    background: var(--black); color: white;
+    font-family: var(--font-body); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--gray-800); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+  .btn-cobalt { background: var(--cobalt); }
+  .btn-cobalt:hover { background: #0F45EE; }
+  .btn-secondary {
+    width: 100%; padding: 12px; border-radius: 8px;
+    background: var(--white); color: var(--black);
+    font-family: var(--font-body); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    border: 1.5px solid var(--gray-200); cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.2s; position: relative;
+  }
+  .btn-secondary:hover { border-color: var(--cobalt); color: var(--cobalt); }
+
+  /* Tooltip */
+  .tooltip-wrap { position: relative; }
+  .tooltip {
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    background: var(--black); color: white;
+    font-size: 11px; padding: 8px 12px; border-radius: 6px;
+    white-space: nowrap; pointer-events: none;
+    animation: fadeIn 0.2s ease; z-index: 10;
+  }
+  .tooltip::after {
+    content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    border: 5px solid transparent; border-top-color: var(--black);
+  }
+
+  /* Tabs */
+  .tab-nav {
+    display: flex; border-bottom: 1px solid var(--gray-200);
+    padding: 0 24px; gap: 0;
+  }
+  .tab-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--font-body); font-size: 11px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--gray-500); padding: 12px 14px;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: all 0.2s;
+  }
+  .tab-btn.active { color: var(--black); border-bottom-color: var(--black); }
+  .tab-btn:hover:not(.active) { color: var(--black); }
+  .tab-content { padding: 20px 24px; flex: 1; }
+  .tab-content p { font-size: 13px; line-height: 1.7; color: var(--gray-500); }
+  .detail-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 0; border-bottom: 1px solid var(--gray-200);
+    font-size: 12px;
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-key { color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.05em; font-size: 10px; }
+  .detail-val { color: var(--black); font-weight: 400; }
+  .qa-item { margin-bottom: 16
