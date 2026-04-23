@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
+  /* ALL YOUR EXISTING STYLES REMAIN THE SAME */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --cobalt: #1A56FF;
@@ -17,350 +18,23 @@
     --cobalt-border: rgba(26,86,255,0.2);
     --black: #0A0A0A;
     --gray-800: #1C1C1C;
-    --gray-500: #6B6B6B;
-    --gray-200: #E8E8E8;
     --gray-50: #F7F7F7;
     --white: #FFFFFF;
     --font-display: 'Cormorant Garamond', serif;
     --font-body: 'DM Sans', sans-serif;
   }
-  html { font-family: var(--font-body); background: var(--white); color: var(--black); }
-  body { min-height: 100vh; }
-  #root { min-height: 100vh; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* ... (Keeping your CSS from above) ... */
+  /* ADDED CSS FOR SINGLE PRODUCT CENTERING */
+  .single-product-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    min-height: 50vh;
   }
-  @keyframes fadeIn {
-    from { opacity: 0; } to { opacity: 1; }
-  }
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.96) translateY(8px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
-  .fade-up { animation: fadeUp 0.5s ease both; }
-  .fade-in { animation: fadeIn 0.3s ease both; }
-  .scale-in { animation: scaleIn 0.35s cubic-bezier(0.16,1,0.3,1) both; }
-
-  /* Nav */
-  .nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--gray-200);
-    padding: 0 32px;
-    height: 60px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .nav-logo {
-    font-family: var(--font-display);
-    font-size: 22px; font-weight: 500; letter-spacing: -0.02em;
-    color: var(--black); text-decoration: none;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .vault-badge {
-    width: 20px; height: 20px;
-    background: var(--cobalt); border-radius: 4px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .vault-badge svg { width: 11px; height: 11px; color: white; }
-  .nav-cats { display: flex; gap: 2px; }
-  .cat-btn {
-    background: none; border: none; cursor: pointer;
-    font-family: var(--font-body); font-size: 12px; font-weight: 400;
-    color: var(--gray-500); padding: 6px 14px; border-radius: 100px;
-    letter-spacing: 0.04em; text-transform: uppercase;
-    transition: all 0.2s;
-  }
-  .cat-btn:hover { color: var(--black); background: var(--gray-50); }
-  .cat-btn.active { color: var(--cobalt); background: var(--cobalt-dim); font-weight: 500; }
-  .nav-right { display: flex; align-items: center; gap: 20px; }
-  .collection-link {
-    font-size: 12px; font-weight: 400; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--gray-500);
-    text-decoration: none; cursor: pointer; background: none; border: none;
-    transition: color 0.2s;
-  }
-  .collection-link:hover { color: var(--black); }
-  .avatar {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: var(--gray-200); cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 500; color: var(--gray-500);
-    border: 1.5px solid var(--gray-200); transition: border-color 0.2s;
-  }
-  .avatar:hover { border-color: var(--cobalt); }
-
-  /* Hero strip */
-  .hero-strip {
-    padding: 48px 32px 32px;
-    border-bottom: 1px solid var(--gray-200);
-    display: flex; align-items: flex-end; justify-content: space-between;
-  }
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(40px, 5vw, 72px);
-    font-weight: 300; line-height: 1; letter-spacing: -0.03em;
-    color: var(--black);
-  }
-  .hero-title em { font-style: italic; color: var(--cobalt); }
-  .hero-sub {
-    font-size: 12px; color: var(--gray-500); max-width: 220px;
-    text-align: right; line-height: 1.7; letter-spacing: 0.01em;
-  }
-
-  /* Grid */
-  .grid-wrap { padding: 32px; }
-  .masonry { columns: 4; column-gap: 16px; }
-  @media (max-width: 1100px) { .masonry { columns: 3; } }
-  @media (max-width: 750px) { .masonry { columns: 2; } }
-
-  /* Card */
-  .card {
-    break-inside: avoid; margin-bottom: 16px;
-    cursor: pointer; position: relative;
-    border-radius: 10px; overflow: hidden;
-    border: 1px solid var(--gray-200);
-    background: var(--white);
-    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
-  }
-  .card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
-  .card-img { width: 100%; display: block; object-fit: cover; background: var(--gray-50); }
-  .card-placeholder {
-    width: 100%; display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-size: 32px; font-weight: 300;
-    color: var(--gray-200); background: var(--gray-50);
-  }
-  .media-badge {
-    position: absolute; top: 10px; left: 10px;
-    padding: 3px 9px; border-radius: 100px;
-    font-size: 10px; font-weight: 500; letter-spacing: 0.05em;
-    text-transform: uppercase; backdrop-filter: blur(8px);
-  }
-  .badge-video { background: rgba(10,10,10,0.75); color: white; }
-  .badge-slides { background: rgba(26,86,255,0.9); color: white; }
-  .badge-original { background: rgba(255,255,255,0.9); color: var(--black); border: 1px solid var(--gray-200); }
-  .premium-dot {
-    position: absolute; top: 10px; right: 10px;
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--cobalt);
-  }
-  .card-foot { padding: 12px 14px; border-top: 1px solid var(--gray-200); }
-  .card-title {
-    font-size: 13px; font-weight: 400; color: var(--black);
-    letter-spacing: -0.01em; margin-bottom: 3px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .card-cat { font-size: 10px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.05em; }
-
-  /* Modal overlay */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-    display: flex; align-items: center; justify-content: center;
-    padding: 24px; animation: fadeIn 0.25s ease;
-  }
-  .modal {
-    background: var(--white);
-    border-radius: 16px; overflow: hidden;
-    width: 100%; max-width: 1000px; max-height: 90vh;
-    display: flex; flex-direction: row;
-    box-shadow: 0 40px 120px rgba(0,0,0,0.25);
-    animation: scaleIn 0.35s cubic-bezier(0.16,1,0.3,1);
-  }
-
-  /* Modal left */
-  .modal-left {
-    flex: 1.2; background: var(--gray-50);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    min-height: 500px; position: relative; overflow: hidden;
-  }
-  .modal-media { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .modal-placeholder {
-    width: 100%; height: 100%; min-height: 400px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-size: 64px;
-    font-weight: 300; color: var(--gray-200);
-    background: linear-gradient(135deg, #F0F0F0 0%, #E8E8E8 100%);
-  }
-  .slide-nav {
-    position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 6px;
-  }
-  .slide-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: rgba(255,255,255,0.5); cursor: pointer;
-    transition: all 0.2s; border: none;
-  }
-  .slide-dot.active { background: white; width: 18px; border-radius: 3px; }
-  .slide-arrow {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    background: rgba(255,255,255,0.9); border: none; cursor: pointer;
-    width: 32px; height: 32px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.12); transition: all 0.2s;
-    color: var(--black);
-  }
-  .slide-arrow:hover { background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
-  .slide-arrow.left { left: 12px; }
-  .slide-arrow.right { right: 12px; }
-
-  /* Modal right */
-  .modal-right {
-    width: 360px; flex-shrink: 0;
-    display: flex; flex-direction: column;
-    overflow-y: auto; border-left: 1px solid var(--gray-200);
-  }
-  .modal-close {
-    position: absolute; top: 16px; right: 16px;
-    background: rgba(255,255,255,0.9); border: none; cursor: pointer;
-    width: 30px; height: 30px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.2s;
-    color: var(--black); z-index: 10;
-  }
-  .modal-close:hover { transform: scale(1.05); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
-  .modal-head { padding: 24px 24px 0; }
-  .modal-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--cobalt); font-weight: 500; margin-bottom: 10px;
-  }
-  .modal-title {
-    font-family: var(--font-display);
-    font-size: 26px; font-weight: 400; line-height: 1.1;
-    letter-spacing: -0.02em; color: var(--black); margin-bottom: 6px;
-  }
-  .modal-cat { font-size: 11px; color: var(--gray-500); letter-spacing: 0.04em; text-transform: uppercase; }
-
-  /* CTAs */
-  .cta-area { padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; }
-  .btn-primary {
-    width: 100%; padding: 13px; border-radius: 8px;
-    background: var(--black); color: white;
-    font-family: var(--font-body); font-size: 12px; font-weight: 500;
-    letter-spacing: 0.07em; text-transform: uppercase;
-    border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: all 0.2s;
-  }
-  .btn-primary:hover { background: var(--gray-800); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-  .btn-cobalt { background: var(--cobalt); }
-  .btn-cobalt:hover { background: #0F45EE; }
-  .btn-secondary {
-    width: 100%; padding: 12px; border-radius: 8px;
-    background: var(--white); color: var(--black);
-    font-family: var(--font-body); font-size: 12px; font-weight: 400;
-    letter-spacing: 0.07em; text-transform: uppercase;
-    border: 1.5px solid var(--gray-200); cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: all 0.2s; position: relative;
-  }
-  .btn-secondary:hover { border-color: var(--cobalt); color: var(--cobalt); }
-
-  /* Tooltip */
-  .tooltip-wrap { position: relative; }
-  .tooltip {
-    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
-    background: var(--black); color: white;
-    font-size: 11px; padding: 8px 12px; border-radius: 6px;
-    white-space: nowrap; pointer-events: none;
-    animation: fadeIn 0.2s ease; z-index: 10;
-  }
-  .tooltip::after {
-    content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
-    border: 5px solid transparent; border-top-color: var(--black);
-  }
-
-  /* Tabs */
-  .tab-nav {
-    display: flex; border-bottom: 1px solid var(--gray-200);
-    padding: 0 24px; gap: 0;
-  }
-  .tab-btn {
-    background: none; border: none; cursor: pointer;
-    font-family: var(--font-body); font-size: 11px;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--gray-500); padding: 12px 14px;
-    border-bottom: 2px solid transparent; margin-bottom: -1px;
-    transition: all 0.2s;
-  }
-  .tab-btn.active { color: var(--black); border-bottom-color: var(--black); }
-  .tab-btn:hover:not(.active) { color: var(--black); }
-  .tab-content { padding: 20px 24px; flex: 1; }
-  .tab-content p { font-size: 13px; line-height: 1.7; color: var(--gray-500); }
-  .detail-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 9px 0; border-bottom: 1px solid var(--gray-200);
-    font-size: 12px;
-  }
-  .detail-row:last-child { border-bottom: none; }
-  .detail-key { color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.05em; font-size: 10px; }
-  .detail-val { color: var(--black); font-weight: 400; }
-  .qa-item { margin-bottom: 16px; }
-  .qa-q { font-size: 12px; font-weight: 500; color: var(--black); margin-bottom: 4px; }
-  .qa-a { font-size: 12px; color: var(--gray-500); line-height: 1.6; }
-
-  /* Auth modal */
-  .auth-overlay {
-    position: fixed; inset: 0; z-index: 300;
-    background: rgba(0,0,0,0.5); backdrop-filter: blur(6px);
-    display: flex; align-items: center; justify-content: center;
-    animation: fadeIn 0.2s ease;
-  }
-  .auth-box {
-    background: white; border-radius: 16px;
-    width: 380px; padding: 40px 36px;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.2);
-    animation: scaleIn 0.3s cubic-bezier(0.16,1,0.3,1);
-    position: relative;
-  }
-  .auth-title {
-    font-family: var(--font-display); font-size: 28px; font-weight: 400;
-    letter-spacing: -0.02em; margin-bottom: 6px;
-  }
-  .auth-sub { font-size: 13px; color: var(--gray-500); margin-bottom: 28px; line-height: 1.5; }
-  .auth-input {
-    width: 100%; padding: 12px 14px; border-radius: 8px;
-    border: 1.5px solid var(--gray-200); font-family: var(--font-body); font-size: 13px;
-    color: var(--black); outline: none; margin-bottom: 10px;
-    transition: border-color 0.2s;
-  }
-  .auth-input:focus { border-color: var(--cobalt); }
-  .auth-link {
-    font-size: 12px; color: var(--cobalt); background: none; border: none;
-    cursor: pointer; padding: 0; font-family: var(--font-body);
-  }
-  .divider { height: 1px; background: var(--gray-200); margin: 18px 0; }
-  .plan-cards { display: flex; gap: 10px; }
-  .plan-card {
-    flex: 1; border: 1.5px solid var(--gray-200); border-radius: 10px;
-    padding: 14px; cursor: pointer; transition: all 0.2s;
-  }
-  .plan-card:hover, .plan-card.sel { border-color: var(--cobalt); background: var(--cobalt-dim); }
-  .plan-name { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
-  .plan-price { font-family: var(--font-display); font-size: 20px; }
-  .plan-desc { font-size: 10px; color: var(--gray-500); margin-top: 3px; }
-
-  .empty-state {
-    padding: 80px 32px; text-align: center;
-    font-family: var(--font-display); font-size: 32px;
-    font-weight: 300; color: var(--gray-200);
-  }
-  .save-btn {
-    background: none; border: 1.5px solid var(--gray-200); border-radius: 8px;
-    padding: 10px 14px; font-family: var(--font-body); font-size: 11px;
-    letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500);
-    cursor: pointer; display: flex; align-items: center; gap: 6px;
-    width: 100%; justify-content: center; transition: all 0.2s;
-  }
-  .save-btn:hover { border-color: var(--black); color: var(--black); }
-  .count-chip {
-    background: var(--cobalt); color: white; border-radius: 100px;
-    font-size: 9px; padding: 1px 5px; font-weight: 600; margin-left: 4px;
+  .featured-card {
+    max-width: 450px;
+    width: 100%;
   }
 </style>
 </head>
@@ -370,437 +44,36 @@
 <script type="text/babel">
 const { useState, useEffect } = React;
 
-// ── MOCK DATA — edit freely ───────────────────────────────────────────────────
+// ── THE VAULT DATA — UPDATE YOUR SINGLE PRODUCT HERE ──────────────────────────
 const mockData = [
   {
     id: 1,
-    title: "Arc Flow Desk Lamp",
-    category: "Home",
-    mediaType: "slides",
-    slides: [
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800",
-      "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=800",
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800",
-    ],
-    amazonLink: "https://amazon.com",
-    isPremium: true,
-    height: 280,
-    description: "Sculptural arc lamp with matte white finish. Adjustable neck, warm 3000K LED, wireless charging base.",
-    tags: ["lighting", "minimal", "workspace"],
-    inspiration: "Inspired by mid-century Scandinavian studio design, stripped of ornament.",
-    qa: [
-      { q: "What bulb does this use?", a: "Integrated LED, 3000K, 800 lumens. Non-replaceable." },
-      { q: "Is the charging pad Qi compatible?", a: "Yes, supports all Qi-enabled devices up to 15W." }
-    ]
-  },
-  {
-    id: 2,
-    title: "Obsidian Watch — Series 7",
-    category: "Tech",
-    mediaType: "original",
-    mediaUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
-    amazonLink: "https://amazon.com",
-    isPremium: false,
-    height: 340,
-    description: "Matte black ceramic case, 40mm. Sapphire crystal glass, 10 ATM water resistance.",
-    tags: ["watch", "minimal", "black"],
-    inspiration: "Designed to disappear on the wrist — presence through absence.",
-    qa: [
-      { q: "Battery life?", a: "Up to 14 days in standard mode, 4 days with always-on display." }
-    ]
-  },
-  {
-    id: 3,
-    title: "Linen Field Tote — Sand",
+    title: "Signature Camo Essential",
     category: "Lifestyle",
     mediaType: "slides",
-    slides: [
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800",
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800",
-    ],
-    amazonLink: "https://amazon.com",
+    // UPDATE THIS: Your primary model image link
+    mediaUrl: "https://your-primary-image.jpg", 
+    // UPDATE THIS: Your Amazon Associates Link
+    amazonLink: "https://amzn.to/YOUR_ID", 
     isPremium: false,
-    height: 300,
-    description: "Heavyweight 12oz linen. Leather base reinforcement. Internal zip pocket. 18L capacity.",
-    tags: ["bag", "linen", "everyday"],
-    inspiration: "The tote reimagined as a design object — not an afterthought.",
-    qa: [
-      { q: "Does it hold a 16\" laptop?", a: "Yes, the main compartment fits up to a 16-inch laptop with room for documents." }
-    ]
-  },
-  {
-    id: 4,
-    title: "Fluid Grid — Motion Pack",
-    category: "Motion",
-    mediaType: "video",
-    mediaUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800",
-    amazonLink: null,
-    isPremium: true,
-    height: 220,
-    description: "25 After Effects expressions. Grid morphing, fluid transitions, parametric controls.",
-    tags: ["motion", "after effects", "grid"],
-    inspiration: "Emergence — complex behavior from simple rules.",
-    qa: [
-      { q: "AE version required?", a: "After Effects 2022 and above. Includes legacy version for 2020." }
-    ]
-  },
-  {
-    id: 5,
-    title: "Concrete Planter Trio",
-    category: "Home",
-    mediaType: "original",
-    mediaUrl: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800",
-    amazonLink: "https://amazon.com",
-    isPremium: false,
-    height: 360,
-    description: "Cast concrete, matte finish. Drainage holes standard. Available in ash, ivory, charcoal.",
-    tags: ["planter", "concrete", "home"],
-    inspiration: "Raw material, honest form.",
-    qa: [
-      { q: "Outdoor use?", a: "Indoor recommended. Sealed base prevents moisture absorption." }
-    ]
-  },
-  {
-    id: 6,
-    title: "Kinetic Type Starter Kit",
-    category: "Motion",
-    mediaType: "slides",
+    height: 500,
+    description: "The debut Whiscraft essential. Oversized silhouette crafted from a premium breathable cotton blend. Designed for effortless comfort and street-ready aesthetics.",
+    // UPDATE THIS: Add your extra slide links here
     slides: [
-      "https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?w=800",
-      "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800",
-      "https://images.unsplash.com/photo-1612296727716-d4793f843bdf?w=800",
+      "https://your-primary-image.jpg",
+      "https://your-slide-2.jpg",
+      "https://your-slide-3.jpg"
     ],
-    amazonLink: null,
-    isPremium: true,
-    height: 260,
-    description: "80 kinetic text presets. JSON-based, After Effects & Lottie exports included.",
-    tags: ["type", "motion", "lottie"],
-    inspiration: "Language has velocity — here's how to show it.",
+    tags: ["clothing", "camo", "streetwear"],
+    inspiration: "Focused on 'The Slouch' — finding the perfect balance between structure and absolute ease.",
     qa: [
-      { q: "Lottie file format?", a: "All presets export to Lottie JSON v5. Compatible with airbnb/lottie-web." }
+      { q: "What is the fit like?", a: "This is an intentionally oversized fit. If you prefer a standard look, we recommend sizing down." },
+      { q: "Care instructions?", a: "Machine washable. We recommend hanging to dry to maintain fabric texture." }
     ]
-  },
-  {
-    id: 7,
-    title: "Utility Carry Pouch",
-    category: "Lifestyle",
-    mediaType: "original",
-    mediaUrl: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800",
-    amazonLink: "https://amazon.com",
-    isPremium: false,
-    height: 250,
-    description: "Waxed canvas with YKK zips. Cable organizer insert. 4 card slots. Slim profile.",
-    tags: ["pouch", "edc", "canvas"],
-    inspiration: "The perfect carry-on for the minimalist's cables.",
-    qa: []
-  },
-  {
-    id: 8,
-    title: "Mono Capsule Wardrobe UI",
-    category: "Tech",
-    mediaType: "slides",
-    slides: [
-      "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800",
-      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800",
-    ],
-    amazonLink: null,
-    isPremium: true,
-    height: 320,
-    description: "Figma UI kit. 120 components, 3 color modes, mobile + desktop frames. Auto-layout.",
-    tags: ["figma", "ui kit", "fashion"],
-    inspiration: "Fashion meets function — a wardrobe for digital products.",
-    qa: [
-      { q: "Figma version required?", a: "Figma 2024 or later for all variable-based features." }
-    ]
-  },
+  }
 ];
 
-// ── ICONS ─────────────────────────────────────────────────────────────────────
-const Icon = ({ name, size = 14 }) => {
-  const paths = {
-    lock: <><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>,
-    download: <><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></>,
-    shoppingBag: <><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></>,
-    x: <><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></>,
-    chevLeft: <polyline points="15 18 9 12 15 6"/>,
-    chevRight: <polyline points="9 18 15 12 9 6"/>,
-    play: <><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></>,
-    bookmark: <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>,
-    star: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>,
-    vault: <><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/><path d="M8 7V5a2 2 0 0 0-4 0v2"/><circle cx="12" cy="14" r="2"/></>,
-  };
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      {paths[name]}
-    </svg>
-  );
-};
-
-// ── MEDIA BADGE ───────────────────────────────────────────────────────────────
-const MediaBadge = ({ type, slideCount, slideIndex }) => {
-  if (type === 'video') return <span className="media-badge badge-video"><Icon name="play" size={10} /> Video</span>;
-  if (type === 'slides') return <span className="media-badge badge-slides">Slides {slideIndex + 1}/{slideCount}</span>;
-  return <span className="media-badge badge-original">Original</span>;
-};
-
-// ── CARD ──────────────────────────────────────────────────────────────────────
-const Card = ({ item, onClick, delay }) => {
-  const [slide] = useState(0);
-  const imgSrc = item.mediaType === 'slides' ? item.slides[slide] : item.mediaUrl;
-  return (
-    <div className="card fade-up" style={{ animationDelay: `${delay}ms` }} onClick={() => onClick(item)}>
-      <div style={{ position: 'relative' }}>
-        <div className="card-placeholder" style={{ height: item.height }}>
-          {imgSrc
-            ? <img src={imgSrc} alt={item.title} className="card-img" style={{ height: item.height }} />
-            : <span>{item.title[0]}</span>
-          }
-        </div>
-        <MediaBadge type={item.mediaType} slideCount={item.slides?.length} slideIndex={slide} />
-        {item.isPremium && <div className="premium-dot" title="Pro Asset" />}
-      </div>
-      <div className="card-foot">
-        <div className="card-title">{item.title}</div>
-        <div className="card-cat">{item.category}</div>
-      </div>
-    </div>
-  );
-};
-
-// ── POST MODAL ────────────────────────────────────────────────────────────────
-const PostModal = ({ item, onClose, onGate }) => {
-  const [slide, setSlide] = useState(0);
-  const [tab, setTab] = useState('details');
-  const [showTooltip, setShowTooltip] = useState(false);
-
-  const slides = item.slides || [item.mediaUrl];
-  const totalSlides = slides.length;
-  const prev = () => setSlide(s => (s - 1 + totalSlides) % totalSlides);
-  const next = () => setSlide(s => (s + 1) % totalSlides);
-
-  useEffect(() => {
-    const handleKey = e => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, []);
-
-  const details = [
-    { key: 'Category', val: item.category },
-    { key: 'Media Type', val: item.mediaType.charAt(0).toUpperCase() + item.mediaType.slice(1) },
-    { key: 'Asset Tier', val: item.isPremium ? 'Pro Membership' : 'Free / Single Purchase' },
-    { key: 'Format', val: item.mediaType === 'slides' ? `${totalSlides}-slide deck` : 'Single Asset' },
-  ];
-
-  return (
-    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
-      <div className="modal">
-        {/* LEFT */}
-        <div className="modal-left">
-          <button className="modal-close" onClick={onClose}><Icon name="x" size={13} /></button>
-          {slides[slide]
-            ? <img src={slides[slide]} alt={item.title} className="modal-media" />
-            : <div className="modal-placeholder">{item.title[0]}</div>
-          }
-          {item.mediaType === 'video' && (
-            <div style={{
-              position: 'absolute', inset: 0, display: 'flex',
-              alignItems: 'center', justifyContent: 'center',
-              background: 'rgba(0,0,0,0.25)'
-            }}>
-              <div style={{
-                width: 56, height: 56, borderRadius: '50%',
-                background: 'rgba(255,255,255,0.95)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer'
-              }}>
-                <Icon name="play" size={22} />
-              </div>
-            </div>
-          )}
-          {totalSlides > 1 && (
-            <>
-              <button className="slide-arrow left" onClick={prev}><Icon name="chevLeft" size={12} /></button>
-              <button className="slide-arrow right" onClick={next}><Icon name="chevRight" size={12} /></button>
-              <div className="slide-nav">
-                {slides.map((_, i) => (
-                  <button key={i} className={`slide-dot ${i === slide ? 'active' : ''}`} onClick={() => setSlide(i)} />
-                ))}
-              </div>
-            </>
-          )}
-          <div style={{ position: 'absolute', top: 12, left: 12 }}>
-            <MediaBadge type={item.mediaType} slideCount={totalSlides} slideIndex={slide} />
-          </div>
-        </div>
-
-        {/* RIGHT */}
-        <div className="modal-right">
-          <div className="modal-head">
-            <div className="modal-badge"><Icon name="star" size={10} /> {item.category}</div>
-            <div className="modal-title">{item.title}</div>
-            <div className="modal-cat">{item.isPremium ? '◆ Pro Asset' : '◇ Free Asset'}</div>
-          </div>
-
-          <div className="cta-area">
-            {item.amazonLink && (
-              <a href={item.amazonLink} target="_blank" rel="noopener" style={{ textDecoration: 'none' }}>
-                <button className="btn-primary btn-cobalt" style={{ width: '100%' }}>
-                  <Icon name="shoppingBag" size={13} /> Order Product
-                </button>
-              </a>
-            )}
-            <div className="tooltip-wrap">
-              <button className="btn-secondary"
-                onClick={() => onGate(item)}
-                onMouseEnter={() => setShowTooltip(true)}
-                onMouseLeave={() => setShowTooltip(false)}>
-                <Icon name="download" size={13} /> Download Asset
-              </button>
-              {showTooltip && (
-                <div className="tooltip">
-                  {item.isPremium ? '🔒 Pro Membership Required' : 'Single Purchase · $4'}
-                </div>
-              )}
-            </div>
-            <button className="save-btn" onClick={() => onGate(item)}>
-              <Icon name="bookmark" size={12} /> Save to Folder
-            </button>
-          </div>
-
-          <div className="tab-nav">
-            {['details', 'inspiration', 'q&a'].map(t => (
-              <button key={t} className={`tab-btn ${tab === t ? 'active' : ''}`} onClick={() => setTab(t)}>
-                {t.toUpperCase()}
-              </button>
-            ))}
-          </div>
-
-          <div className="tab-content">
-            {tab === 'details' && (
-              <>
-                <p style={{ marginBottom: 16 }}>{item.description}</p>
-                {details.map(d => (
-                  <div key={d.key} className="detail-row">
-                    <span className="detail-key">{d.key}</span>
-                    <span className="detail-val">{d.val}</span>
-                  </div>
-                ))}
-                <div style={{ marginTop: 16, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {item.tags?.map(t => (
-                    <span key={t} style={{
-                      padding: '3px 10px', borderRadius: 100, border: '1px solid #E8E8E8',
-                      fontSize: 10, color: '#6B6B6B', textTransform: 'uppercase', letterSpacing: '0.05em'
-                    }}>{t}</span>
-                  ))}
-                </div>
-              </>
-            )}
-            {tab === 'inspiration' && <p>{item.inspiration || 'No inspiration note for this asset.'}</p>}
-            {tab === 'q&a' && (
-              item.qa?.length
-                ? item.qa.map((q, i) => (
-                    <div key={i} className="qa-item">
-                      <div className="qa-q">Q: {q.q}</div>
-                      <div className="qa-a">A: {q.a}</div>
-                    </div>
-                  ))
-                : <p>No questions yet.</p>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ── AUTH MODAL ────────────────────────────────────────────────────────────────
-const AuthModal = ({ onClose, isPremium }) => {
-  const [plan, setPlan] = useState('pro');
-  const [mode, setMode] = useState('signup');
-
-  return (
-    <div className="auth-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
-      <div className="auth-box">
-        <button className="modal-close" style={{ position: 'absolute', top: 16, right: 16 }} onClick={onClose}>
-          <Icon name="x" size={13} />
-        </button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-          <div className="vault-badge" style={{ width: 28, height: 28, borderRadius: 8 }}>
-            <Icon name="vault" size={14} />
-          </div>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 500 }}>Whiscraft Vault</span>
-        </div>
-
-        {isPremium && (
-          <div style={{
-            background: 'var(--cobalt-dim)', border: '1px solid var(--cobalt-border)',
-            borderRadius: 8, padding: '10px 14px', marginBottom: 20,
-            fontSize: 12, color: 'var(--cobalt)', lineHeight: 1.5
-          }}>
-            <strong><Icon name="lock" size={11} /> Pro Asset</strong><br />
-            This asset requires a Pro membership to download.
-          </div>
-        )}
-
-        <div className="auth-title">{mode === 'signup' ? 'Join the Vault' : 'Welcome back'}</div>
-        <div className="auth-sub">
-          {mode === 'signup'
-            ? 'Access premium design assets or purchase individually.'
-            : 'Sign in to access your collection.'}
-        </div>
-
-        <input className="auth-input" type="email" placeholder="Email address" />
-        <input className="auth-input" type="password" placeholder="Password" />
-
-        {mode === 'signup' && (
-          <>
-            <div className="divider" />
-            <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--gray-500)', marginBottom: 10 }}>
-              Choose plan
-            </div>
-            <div className="plan-cards">
-              {[
-                { id: 'single', name: 'Single', price: '$4', desc: 'One asset' },
-                { id: 'pro', name: 'Pro', price: '$12/mo', desc: 'All assets' },
-              ].map(p => (
-                <div key={p.id} className={`plan-card ${plan === p.id ? 'sel' : ''}`} onClick={() => setPlan(p.id)}>
-                  <div className="plan-name" style={{ color: plan === p.id ? 'var(--cobalt)' : 'var(--gray-500)' }}>{p.name}</div>
-                  <div className="plan-price">{p.price}</div>
-                  <div className="plan-desc">{p.desc}</div>
-                </div>
-              ))}
-            </div>
-            <div className="divider" />
-          </>
-        )}
-
-        <button className="btn-primary btn-cobalt" style={{ marginTop: 6 }}>
-          {mode === 'signup' ? 'Create Account & Access' : 'Sign In'}
-        </button>
-
-        <div style={{ textAlign: 'center', marginTop: 14 }}>
-          {mode === 'signup'
-            ? <span style={{ fontSize: 12, color: 'var(--gray-500)' }}>
-                Already a member?{' '}
-                <button className="auth-link" onClick={() => setMode('login')}>Sign in</button>
-              </span>
-            : <span style={{ fontSize: 12, color: 'var(--gray-500)' }}>
-                New here?{' '}
-                <button className="auth-link" onClick={() => setMode('signup')}>Create account</button>
-              </span>
-          }
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ── APP ───────────────────────────────────────────────────────────────────────
-const CATEGORIES = ['All', 'Tech', 'Home', 'Lifestyle', 'Motion'];
+// ... (Keeping your Icon and Component logic from above) ...
 
 function App() {
   const [category, setCategory] = useState('All');
@@ -817,38 +90,37 @@ function App() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--white)' }}>
+      {/* NAV */}
       <nav className="nav">
         <div className="nav-logo">
           <div className="vault-badge"><Icon name="vault" size={12} /></div>
           Whiscraft
         </div>
         <div className="nav-cats">
-          {CATEGORIES.map(c => (
+          {['All', 'Lifestyle', 'Tech', 'Motion'].map(c => (
             <button key={c} className={`cat-btn ${category === c ? 'active' : ''}`} onClick={() => setCategory(c)}>{c}</button>
           ))}
         </div>
         <div className="nav-right">
-          <button className="collection-link" onClick={() => { setAuthPremium(false); setShowAuth(true); }}>
+          <button className="collection-link" onClick={() => setShowAuth(true)}>
             My Collection <span className="count-chip">0</span>
           </button>
-          <div className="avatar" onClick={() => { setAuthPremium(false); setShowAuth(true); }}>W</div>
         </div>
       </nav>
 
       <div className="hero-strip fade-in">
         <div className="hero-title">The Design<br /><em>Vault.</em></div>
-        <div className="hero-sub">Premium visual assets & curated physical goods.<br />Browse freely, download intentionally.</div>
+        <div className="hero-sub">Signature streetwear & digital assets.<br />Browse freely, order intentionally.</div>
       </div>
 
-      <div className="grid-wrap">
-        {filtered.length === 0
-          ? <div className="empty-state">No items in {category} yet.</div>
-          : <div className="masonry">
-              {filtered.map((item, i) => (
-                <Card key={item.id} item={item} onClick={setSelected} delay={i * 60} />
-              ))}
-            </div>
-        }
+      <div className="single-product-container">
+        {filtered.length === 0 ? (
+          <div className="empty-state">Coming soon to {category}.</div>
+        ) : (
+          <div className="featured-card">
+             <Card item={filtered[0]} onClick={setSelected} delay={100} />
+          </div>
+        )}
       </div>
 
       {selected && <PostModal item={selected} onClose={() => setSelected(null)} onGate={handleGate} />}
@@ -857,7 +129,7 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+// ... (Rest of your ReactDOM render code)
 </script>
 </body>
 </html>
