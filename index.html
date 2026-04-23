@@ -374,22 +374,33 @@ const { useState, useEffect } = React;
 const mockData = [
   {
     id: 1,
-    title: "Signature Product Name",
-    category: "Tech",
-    mediaType: "original",
-    mediaUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800",
-    amazonLink: "https://amazon.com",
+    title: "Signature Camo Essential",
+    category: "Lifestyle",
+    mediaType: "slides", // Set to "slides" to use your carousel images
+    // UPDATE THIS: Use your direct link for the main model shot
+    mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1776947518/Side_1_c8qyfs.png", 
+    // UPDATE THIS: Your Amazon Associate Short Link
+    amazonLink: "https://amzn.to/your-short-link", 
     isPremium: false,
-    height: 340,
-    description: "Briefly describe your product features and quality here.",
-    tags: ["tag1", "tag2"],
-    inspiration: "Explain the design story or inspiration here.",
+    height: 500, // Keeps the vertical look from your reference
+    description: "The debut Whiscraft essential. A heavy-weight, breathable cotton blend crafted for the perfect oversized silhouette. Engineered for absolute comfort without compromising the street aesthetic.",
+    tags: ["Camo", "Oversized", "Debut", "Streetwear"],
+    inspiration: "Focused on 'The Slouch' — a design study in finding the balance between architectural structure and effortless ease.",
+    // UPDATE THIS: Add the links for Slide 2 and 3 (Detail shot and Size chart)
+    slides: [
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947518/Side_1_c8qyfs.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_2_ftdjr3.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_3_lelwzf.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_4_yst9el.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_5_nhkzqb.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_6_qt7tvh.png",
+    ],
     qa: [
-      { q: "Frequent question?", a: "Direct answer." }
+      { q: "How does the sizing run?", a: "Intentionally oversized. For a standard fit, size down; for the signature Whiscraft look, stick to your true size." },
+      { q: "Is the fabric machine washable?", a: "Yes. We recommend a cold wash and hang dry to preserve the unique camouflage depth and knit texture." }
     ]
   },
 ];
-
 // ── ICONS ─────────────────────────────────────────────────────────────────────
 const Icon = ({ name, size = 14 }) => {
   const paths = {
