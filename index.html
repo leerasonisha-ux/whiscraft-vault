@@ -16,14 +16,14 @@
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --cobalt: #2E5BFF; /* [cite: 18, 97, 147] */
-            --acid-green: #C1FF00; /* [cite: 19, 97, 157] */
-            --paper-white: #F9F9F9; /* [cite: 17, 97, 140] */
-            --black: #000000; /* [cite: 17, 97, 146] */
+            --cobalt: #2E5BFF;
+            --acid-green: #C1FF00;
+            --paper-white: #F9F9F9;
+            --black: #000000;
             --gray-500: #6B6B6B;
             --gray-200: #E8E8E8;
-            --font-display: 'Cormorant Garamond', serif; /* [cite: 290, 300, 315] */
-            --font-ui: 'Inter', sans-serif; /* [cite: 300, 305, 315] */
+            --font-display: 'Cormorant Garamond', serif;
+            --font-ui: 'Inter', sans-serif;
         }
         html, body { 
             font-family: var(--font-ui); 
@@ -34,7 +34,6 @@
             overflow: hidden;
         }
 
-        /* Coming Soon Layout: [cite: 267, 268, 277] */
         .landing-wrap {
             height: 100vh; width: 100vw; position: relative;
             background: url('https://res.cloudinary.com/dsviustds/image/upload/v1777284354/make_it_more_202604271405_vzrvsi.jpg') no-repeat center center;
@@ -42,7 +41,6 @@
             display: flex; flex-direction: column; justify-content: space-between; padding: 60px;
         }
         
-        /* Navigation Protection: [cite: 311, 313, 314] */
         .gradient-overlay {
             position: absolute;
             bottom: 0; left: 0; right: 0;
@@ -52,7 +50,7 @@
             pointer-events: none;
         }
 
-        .landing-logo { height: 32px; width: auto; align-self: flex-start; z-index: 2; }
+        .landing-logo { height: 32px; width: auto; align-self: flex-start; z-index: 2; cursor: pointer; }
         
         .hero-container { 
             max-width: 900px; 
@@ -66,13 +64,12 @@
             font-size: clamp(42px, 6vw, 72px);
             font-weight: 300; letter-spacing: -0.02em; line-height: 1.05;
             margin-bottom: 32px; color: var(--black);
-            font-variant-ligatures: common-ligatures; /* [cite: 306, 315] */
+            font-variant-ligatures: common-ligatures;
         }
 
-        /* CTA Style: [cite: 18, 132, 147] */
         .cta-btn {
             background: var(--black); color: white; border: none;
-            padding: 18px 42px; font-size: 12px; letter-spacing: 0.15em;
+            padding: 18px 42px; font-size: 11px; letter-spacing: 0.15em;
             font-weight: 600; text-transform: uppercase; cursor: pointer;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             display: inline-flex; align-items: center; justify-content: center;
@@ -80,7 +77,6 @@
         }
         .cta-btn:hover { background: var(--cobalt); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(46, 91, 255, 0.2); }
 
-        /* Footer Nav: [cite: 301, 308, 316] */
         .footer-nav { 
             display: flex; justify-content: space-between; align-items: center; 
             padding-top: 30px; z-index: 2; position: relative;
@@ -114,11 +110,10 @@
         }
 
         .vault-access:hover { 
-            background: var(--white); transform: scale(1.05);
+            background: #fff; transform: scale(1.05);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); border-color: var(--cobalt);
         }
 
-        /* Windowed Product View: [cite: 298, 303, 304, 307] */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: center; justify-content: center; }
         .modal-window { 
             width: 80vw; height: 80vh; background: white; display: flex; overflow: hidden; position: relative;
@@ -142,7 +137,6 @@
 <script type="text/babel">
 const { useState } = React;
 
-// ── PRODUCT_TEMPLATE — ADD NEW PRODUCTS HERE: [cite: 271, 275, 276, 283] ─────
 const mockData = [
   {
     id: 1,
@@ -159,11 +153,9 @@ const mockData = [
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_5_nhkzqb.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_6_qt7tvh.png"
     ]
-  }
-];    
-[
+  },
   {
-    id: 1,
+    id: 2,
     title: "Women's Floral Maxi",
     category: "Lifestyle",
     mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_visually_engaging_202604251609_x9idxh.jpg", 
@@ -174,7 +166,7 @@ const mockData = [
       "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_bright__airy_202604251609_k52m2c.jpg",
       "https://res.cloudinary.com/dsviustds/image/upload/v1777285801/swap_the_dress_202604251610_oq8jqf.jpg",
       "https://res.cloudinary.com/dsviustds/image/upload/v1777285799/A_high-resolution_photograph_202604251609_1_dshjej.jpg",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1777285802/An_extreme_macro-photography_202604251608_qlntzd.jpg",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1777285802/An_extreme_macro-photography_202604251608_qlntzd.jpg"
     ]
   }
 ];
@@ -190,7 +182,7 @@ const App = () => {
       <img src="https://res.cloudinary.com/dsviustds/image/upload/v1776948035/Whiscraft-logo_logo-Dark_1035x267_xanion.png" className="landing-logo" alt="Whiscraft Logo" />
       
       <div className="hero-container">
-        <h1 className="tagline">Whiscraft is coming to protect the craft.</h1>
+        <h1 className="tagline">We’re putting an eye on your assets. Literally.</h1>
         <button className="cta-btn" onClick={() => setView('account')}>Secure My Spot</button>
       </div>
 
@@ -263,12 +255,10 @@ const App = () => {
                 <h1 style={{fontFamily:'var(--font-display)', fontSize:'48px', margin:'20px 0', fontStyle:'italic', borderBottom:'1px solid #000', paddingBottom:'16px'}}>{selectedProduct.title}</h1>
                 <p style={{fontSize:'14px', lineHeight:'1.8', color:'var(--gray-500)', marginBottom:'40px'}}>{selectedProduct.description}</p>
                 
-                {/* [cite: 269, 284] Direct Amazon Link CTA - Updated to match Primary style */}
                 <a href={selectedProduct.amazonLink} target="_blank" className="cta-btn" style={{marginBottom:'16px'}}>
                     Take Me To Product
                 </a>
                 
-                {/* [cite: 270, 284] Shopping List CTA */}
                 <button style={{width:'100%', padding:'18px', background:'none', border:'1px solid #000', cursor:'pointer', fontSize:'11px', letterSpacing:'0.15em', fontWeight:'700', textTransform:'uppercase'}}>Add to Shopping List</button>
                 
                 <div style={{marginTop:'auto', borderTop:'1px solid var(--gray-200)', paddingTop:'30px'}}>
