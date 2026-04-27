@@ -4,11 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Whiscraft — Protect the Craft</title>
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dsviustds/image/upload/v1777283676/Whiscraft-logo_Logomark-Dark_500x500_pmthhb.png">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Cormorant+Garamond:wght@300;400;500&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
+    
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
@@ -18,86 +22,77 @@
             --black: #000000;
             --gray-500: #6B6B6B;
             --gray-200: #E8E8E8;
-            --font-display: 'Cormorant Garamond', serif;
+            --font-display: 'Playfair Display', serif;
+            --font-serif: 'Cormorant Garamond', serif;
             --font-body: 'DM Sans', sans-serif;
         }
         html, body { 
             font-family: var(--font-body); 
             background: var(--paper-white); 
             color: var(--black); 
-            overflow-x: hidden;
             height: 100%;
         }
 
-        /* Coming Soon Styles */
+        /* Coming Soon Layout */
         .landing-wrap {
-            height: 100vh;
-            width: 100vw;
-            position: relative;
-            background: url('https://res.cloudinary.com/dsviustds/image/upload/v1777284354/make_it_more_202604271405_vzrvsi.jpg') no-repeat center center;
+            height: 100vh; width: 100vw; position: relative;
+            background: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), 
+                        url('https://res.cloudinary.com/dsviustds/image/upload/v1777284354/make_it_more_202604271405_vzrvsi.jpg') no-repeat center center;
             background-size: cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 40px;
+            display: flex; flex-direction: column; justify-content: space-between; padding: 60px;
         }
-        .landing-logo { height: 32px; width: auto; align-self: flex-start; }
-        .hero-container { max-width: 800px; animation: fadeIn 1.2s ease-out; }
+        .landing-logo { height: 38px; width: auto; align-self: flex-start; }
+        .hero-container { max-width: 900px; animation: fadeIn 1.5s ease-out; }
         .tagline {
             font-family: var(--font-display);
-            font-size: clamp(32px, 4vw, 56px);
-            font-weight: 300;
-            letter-spacing: -0.01em;
-            margin-bottom: 24px;
-            color: var(--black);
+            font-size: clamp(38px, 5vw, 68px);
+            font-weight: 400; letter-spacing: -0.02em; line-height: 1.1;
+            margin-bottom: 32px; color: var(--black);
         }
         .cta-btn {
-            background: var(--cobalt);
-            color: white;
-            border: none;
-            padding: 16px 32px;
-            font-size: 14px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--black); color: white; border: none;
+            padding: 18px 40px; font-size: 13px; letter-spacing: 0.15em;
+            text-transform: uppercase; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .cta-btn:hover { transform: scale(1.05); background: #1A46E6; }
+        .cta-btn:hover { background: var(--cobalt); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(46, 91, 255, 0.3); }
 
         /* Footer Nav */
-        .footer-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid rgba(0,0,0,0.1);
-            padding-top: 20px;
-        }
-        .status-pill { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; display: flex; align-items: center; gap: 8px; }
-        .dot { width: 8px; height: 8px; background: var(--acid-green); border-radius: 50%; box-shadow: 0 0 10px var(--acid-green); }
+        .footer-nav { display: flex; justify-content: space-between; align-items: center; padding-top: 30px; border-top: 1px solid rgba(0,0,0,0.08); }
+        .status-pill { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; display: flex; align-items: center; gap: 10px; font-weight: 500; }
+        .dot { width: 7px; height: 7px; background: var(--acid-green); border-radius: 50%; box-shadow: 0 0 12px var(--acid-green); }
+        .vault-access { display: flex; align-items: center; gap: 16px; cursor: pointer; group: hover; text-decoration: none; color: var(--black); }
+        .vault-access span { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; opacity: 0.6; transition: opacity 0.3s; }
+        .vault-access:hover span { opacity: 1; }
         .arrow-circle {
-            width: 44px; height: 44px; border: 1px solid var(--black); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-            transition: all 0.3s;
+            width: 50px; height: 50px; border: 1px solid rgba(0,0,0,0.2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; transition: all 0.4s;
         }
-        .arrow-circle:hover { background: var(--black); color: white; }
+        .vault-access:hover .arrow-circle { background: var(--black); border-color: var(--black); color: white; transform: rotate(-45deg); }
 
-        /* Vault / Shopping Grid Styles */
-        .vault-wrap { padding: 40px; min-height: 100vh; }
-        .masonry { columns: 4; column-gap: 20px; }
-        @media (max-width: 1000px) { .masonry { columns: 2; } }
-        .card { break-inside: avoid; margin-bottom: 24px; cursor: pointer; border: 1px solid var(--gray-200); background: white; padding: 10px; }
-        .card img { width: 100%; height: auto; display: block; }
-        .card-info { padding: 12px 0; }
-        .card-title { font-size: 14px; font-weight: 500; }
-        
-        /* Modal Styles */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 1000; display: flex; padding: 40px; }
-        .modal-content { display: flex; width: 100%; gap: 40px; }
-        .modal-image-sec { flex: 1; overflow-y: auto; }
-        .modal-info-sec { width: 400px; padding-top: 60px; }
-        .modal-close { position: absolute; top: 40px; right: 40px; cursor: pointer; font-size: 24px; border: none; background: none; }
+        /* Shopping Grid Styles */
+        .vault-wrap { padding: 60px; min-height: 100vh; }
+        .vault-header { font-family: var(--font-display); font-size: 56px; font-weight: 400; margin-bottom: 60px; letter-spacing: -0.01em; }
+        .masonry { columns: 4; column-gap: 30px; }
+        @media (max-width: 1100px) { .masonry { columns: 2; } }
+        .card { break-inside: avoid; margin-bottom: 40px; cursor: pointer; background: white; transition: transform 0.4s; }
+        .card:hover { transform: translateY(-8px); }
+        .card img { width: 100%; height: auto; display: block; border-radius: 2px; }
+        .card-info { padding: 20px 0; border-bottom: 1px solid var(--gray-200); }
+        .card-title { font-family: var(--font-serif); font-size: 20px; font-weight: 400; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* Modal / Product View */
+        .modal-overlay { position: fixed; inset: 0; background: var(--paper-white); z-index: 1000; display: flex; animation: fadeIn 0.4s ease; }
+        .modal-content { display: flex; width: 100%; height: 100%; }
+        .modal-image-sec { 
+            flex: 1.4; overflow-y: auto; background: #fff; padding: 60px;
+            display: flex; flex-direction: column; align-items: center; gap: 40px;
+        }
+        .modal-image-sec img { max-width: 85%; height: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.05); }
+        .modal-info-sec { width: 480px; padding: 80px 60px; overflow-y: auto; border-left: 1px solid var(--gray-200); background: var(--paper-white); }
+        .modal-close { position: absolute; top: 40px; right: 40px; cursor: pointer; font-size: 18px; border: none; background: none; z-index: 1001; letter-spacing: 0.1em; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -106,27 +101,28 @@
 <script type="text/babel">
 const { useState } = React;
 
-// ── PRODUCT_TEMPLATE — ADD NEW PRODUCTS HERE ─────────────────────────────────
+// ── PRODUCT_TEMPLATE ────────────────────────────────────────────────────────
 const mockData = [
   {
     id: 1,
     title: "Signature Camo Essential",
     category: "Lifestyle",
-    mediaType: "slides", 
     mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1776947518/Side_1_c8qyfs.png", 
     amazonLink: "https://amzn.to/your-short-link", 
-    description: "The debut Whiscraft essential. A heavy-weight, breathable cotton blend crafted for the perfect oversized silhouette.",
+    description: "The debut Whiscraft essential. A heavy-weight, breathable cotton blend crafted for the perfect oversized silhouette. Engineered for absolute comfort without compromising the street aesthetic.",
     slides: [
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947518/Side_1_c8qyfs.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_2_ftdjr3.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_3_lelwzf.png"
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_3_lelwzf.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_4_yst9el.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_5_nhkzqb.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_6_qt7tvh.png"
     ]
-  },
-  // To add a new product, copy the block above and change the details.
+  }
 ];
 
 const App = () => {
-  const [view, setView] = useState('landing'); // 'landing', 'vault', 'account'
+  const [view, setView] = useState('landing'); 
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const LandingPage = () => (
@@ -140,8 +136,11 @@ const App = () => {
 
       <div className="footer-nav">
         <div className="status-pill"><div className="dot"></div> Encryption Protocols Active</div>
-        <div className="arrow-circle" onClick={() => setView('vault')}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <div className="vault-access" onClick={() => setView('vault')}>
+          <span>Explore Collection</span>
+          <div className="arrow-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </div>
         </div>
       </div>
     </div>
@@ -149,18 +148,21 @@ const App = () => {
 
   const VaultPage = () => (
     <div className="vault-wrap fade-in">
-      <div style={{display:'flex', justifyContent:'space-between', marginBottom: '40px'}}>
+      <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: '80px'}}>
         <img src="https://res.cloudinary.com/dsviustds/image/upload/v1776948035/Whiscraft-logo_logo-Dark_1035x267_xanion.png" height="24" onClick={() => setView('landing')} style={{cursor:'pointer'}} />
-        <button style={{background:'none', border:'none', cursor:'pointer', fontSize:'12px', letterSpacing:'0.1em'}} onClick={() => setView('account')}>ACCOUNT</button>
+        <div style={{display:'flex', gap:'30px'}}>
+            <button style={{background:'none', border:'none', cursor:'pointer', fontSize:'11px', letterSpacing:'0.15em', fontWeight:'500'}} onClick={() => setView('account')}>ACCOUNT</button>
+            <button style={{background:'none', border:'none', cursor:'pointer', fontSize:'11px', letterSpacing:'0.15em', fontWeight:'500'}} onClick={() => setView('landing')}>EXIT</button>
+        </div>
       </div>
-      <h2 style={{fontFamily:'var(--font-display)', fontSize:'48px', fontWeight:'300', marginBottom:'40px'}}>Curated Gear</h2>
+      <h2 className="vault-header">The Curated Vault.</h2>
       <div className="masonry">
         {mockData.map(item => (
           <div key={item.id} className="card" onClick={() => setSelectedProduct(item)}>
             <img src={item.mediaUrl} alt={item.title} />
             <div className="card-info">
               <div className="card-title">{item.title}</div>
-              <div style={{fontSize:'10px', color:'var(--gray-500)', marginTop:'4px'}}>{item.category}</div>
+              <div style={{fontSize:'10px', color:'var(--gray-500)', marginTop:'8px', textTransform:'uppercase', letterSpacing:'0.1em'}}>{item.category}</div>
             </div>
           </div>
         ))}
@@ -168,44 +170,42 @@ const App = () => {
     </div>
   );
 
-  const AuthPage = () => (
-    <div style={{height:'100vh', display:'flex', alignItems:'center', justify_content:'center', padding:'20px'}}>
-        <div style={{maxWidth:'360px', width:'100%'}}>
-            <h2 style={{fontFamily:'var(--font-display)', fontSize:'32px', marginBottom:'20px'}}>Secure Access</h2>
-            <input type="email" placeholder="Email" style={{width:'100%', padding:'12px', border:'1px solid #ddd', marginBottom:'10px'}} />
-            <input type="password" placeholder="Password" style={{width:'100%', padding:'12px', border:'1px solid #ddd', marginBottom:'20px'}} />
-            <button className="cta-btn" style={{width:'100%'}} onClick={() => setView('landing')}>Create Account</button>
-            <button style={{width:'100%', background:'none', border:'none', marginTop:'20px', fontSize:'12px', color:'var(--gray-500)'}} onClick={() => setView('landing')}>BACK TO SITE</button>
-        </div>
-    </div>
-  );
-
   return (
     <div>
       {view === 'landing' && <LandingPage />}
       {view === 'vault' && <VaultPage />}
-      {view === 'account' && <AuthPage />}
+      {view === 'account' && (
+        <div style={{height:'100vh', display:'flex', alignItems:'center', justifyContent:'center', background:'var(--paper-white)'}}>
+            <div style={{maxWidth:'360px', width:'100%', padding:'40px'}}>
+                <h2 style={{fontFamily:'var(--font-display)', fontSize:'36px', marginBottom:'24px', fontWeight:'400'}}>Secure Access</h2>
+                <input type="email" placeholder="Professional Email" style={{width:'100%', padding:'16px', border:'none', borderBottom:'1px solid #000', background:'none', marginBottom:'16px', outline:'none', fontSize:'13px'}} />
+                <input type="password" placeholder="Password" style={{width:'100%', padding:'16px', border:'none', borderBottom:'1px solid #000', background:'none', marginBottom:'32px', outline:'none', fontSize:'13px'}} />
+                <button className="cta-btn" style={{width:'100%'}} onClick={() => setView('landing')}>Create Account</button>
+                <p style={{fontSize:'11px', textAlign:'center', marginTop:'30px', color:'#999', cursor:'pointer'}} onClick={() => setView('landing')}>RETURN TO STEALTH MODE</p>
+            </div>
+        </div>
+      )}
 
       {selectedProduct && (
         <div className="modal-overlay">
-          <button className="modal-close" onClick={() => setSelectedProduct(null)}>✕</button>
+          <button className="modal-close" onClick={() => setSelectedProduct(null)}>CLOSE [X]</button>
           <div className="modal-content">
             <div className="modal-image-sec">
-                {selectedProduct.slides.map((url, i) => <img key={i} src={url} style={{width:'100%', marginBottom:'20px'}} />)}
+                {selectedProduct.slides.map((url, i) => <img key={i} src={url} alt={`View ${i}`} />)}
             </div>
             <div className="modal-info-sec">
-                <span style={{fontSize:'10px', color:'var(--cobalt)', letterSpacing:'0.1em'}}>{selectedProduct.category}</span>
-                <h1 style={{fontFamily:'var(--font-display)', fontSize:'42px', margin:'10px 0 20px'}}>{selectedProduct.title}</h1>
-                <p style={{lineHeight:'1.6', color:'var(--gray-500)', marginBottom:'30px'}}>{selectedProduct.description}</p>
+                <span style={{fontSize:'10px', color:'var(--cobalt)', letterSpacing:'0.15em', fontWeight:'600', textTransform:'uppercase'}}>{selectedProduct.category}</span>
+                <h1 style={{fontFamily:'var(--font-display)', fontSize:'48px', fontWeight:'400', margin:'16px 0 32px', borderBottom:'1px solid #000', paddingBottom:'20px'}}>{selectedProduct.title}</h1>
+                <p style={{fontFamily:'var(--font-serif)', fontSize:'18px', lineHeight:'1.6', color:'var(--black)', marginBottom:'40px', opacity:'0.8'}}>{selectedProduct.description}</p>
                 
                 <a href={selectedProduct.amazonLink} target="_blank" style={{textDecoration:'none'}}>
-                    <button className="cta-btn" style={{width:'100%', marginBottom:'12px'}}>Take Me To Product</button>
+                    <button className="cta-btn" style={{width:'100%', marginBottom:'16px'}}>Take Me To Product</button>
                 </a>
-                <button style={{width:'100%', padding:'14px', background:'white', border:'1px solid black', cursor:'pointer', fontSize:'12px', letterSpacing:'0.1em'}}>ADD TO SHOPPING LIST</button>
+                <button style={{width:'100%', padding:'18px', background:'none', border:'1px solid #000', cursor:'pointer', fontSize:'11px', letterSpacing:'0.1em', fontWeight:'600', textTransform:'uppercase'}}>Add to Shopping List</button>
                 
-                <div style={{marginTop:'40px', borderTop:'1px solid #eee', paddingTop:'20px'}}>
-                    <span style={{fontSize:'11px', fontWeight:'500'}}>FOLDER MANAGEMENT</span>
-                    <p style={{fontSize:'12px', color:'#999', marginTop:'8px'}}>Sign in to save this product to a specific project folder.</p>
+                <div style={{marginTop:'60px', borderTop:'1px solid var(--gray-200)', paddingTop:'30px'}}>
+                    <span style={{fontSize:'10px', fontWeight:'600', letterSpacing:'0.1em', textTransform:'uppercase'}}>Project Folders</span>
+                    <p style={{fontSize:'12px', color:'#777', marginTop:'12px', lineHeight:'1.5'}}>Account holders can organize curated gear into client-specific project folders for architectural planning.</p>
                 </div>
             </div>
           </div>
