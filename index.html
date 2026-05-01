@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-// Establishing the secure connection to your Supabase Vault
+// Secure connection to your Supabase Vault
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
   process.env.REACT_APP_SUPABASE_ANON_KEY
@@ -13,112 +13,137 @@ const App = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // The 'Data Fetcher' robot that pulls from your digital brain
+  // Data Fetching Logic
   useEffect(() => {
     const fetchVaultItems = async () => {
-      let { data, error } = await supabase
-        .from('products')
-        .select('*');
-      
-      if (error) {
-        console.error("Vault Sync Error:", error);
-      } else {
-        setProducts(data || []);
-      }
+      let { data, error } = await supabase.from('products').select('*');
+      if (error) console.error("Vault Sync Error:", error);
+      else setProducts(data || []);
       setLoading(false);
     };
-
     fetchVaultItems();
   }, []);
 
+  // Internal Styles (Industrial Noir / Lux Minimalist)
+  const styles = {
+    hero: {
+      height: '100vh',
+      backgroundImage: "url('https://res.cloudinary.com/dsviustds/image/upload/v1777284354/make_it_more_202604271405_vzrvsi.jpg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      padding: '60px',
+      color: '#000'
+    },
+    tagline: {
+      fontFamily: "'Cormorant Garamond', serif",
+      fontSize: 'clamp(48px, 6vw, 82px)',
+      fontWeight: '300',
+      lineHeight: '1.1',
+      marginBottom: '40px'
+    },
+    btnMain: {
+      backgroundColor: '#000',
+      color: '#FFF',
+      padding: '20px 48px',
+      border: 'none',
+      fontSize: '11px',
+      letterSpacing: '0.18em',
+      fontWeight: '600',
+      textTransform: 'uppercase',
+      cursor: 'pointer'
+    },
+    vaultSection: {
+      padding: '120px 60px',
+      backgroundColor: '#FFF'
+    },
+    productGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+      gap: '40px'
+    },
+    modalOverlay: {
+      position: 'fixed',
+      inset: 0,
+      backgroundColor: 'rgba(0,0,0,0.4)',
+      backdropFilter: 'blur(10px)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1000,
+      padding: '40px'
+    }
+  };
+
   return (
-    <div style={{ backgroundColor: '#F9F9F9', minHeight: '100vh', fontFamily: 'Inter, sans-serif' }}>
+    <div style={{ backgroundColor: '#FFF', minHeight: '100vh', fontFamily: "'Inter', sans-serif" }}>
       
       {/* --- SECTION 1: LANDING HERO --- */}
-      <section style={{ 
-        height: '100vh', 
-        backgroundImage: "url('https://res.cloudinary.com/dsviustds/image/upload/v1777284354/make_it_more_202604271405_vzrvsi.jpg')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        padding: '60px'
-      }}>
+      <section style={styles.hero}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <img src="https://res.cloudinary.com/dsviustds/image/upload/v1776948035/Whiscraft-logo_logo-Dark_1035x267_xanion.png" alt="Logo" style={{ height: '30px' }} />
-          <button style={{ background: 'none', border: 'none', fontWeight: '700', fontSize: '11px', letterSpacing: '0.1em', cursor: 'pointer' }}>SIGN IN</button>
+          <img src="https://res.cloudinary.com/dsviustds/image/upload/v1776948035/Whiscraft-logo_logo-Dark_1035x267_xanion.png" alt="Whiscraft" style={{ height: '30px' }} />
+          <button style={{ background: 'none', border: 'none', fontSize: '11px', fontWeight: '700', letterSpacing: '0.1em', cursor: 'pointer' }}>SIGN IN</button>
         </div>
 
-        <div style={{ maxWidth: '800px' }}>
-          <h1 style={{ fontSize: '72px', fontWeight: '300', marginBottom: '40px', fontFamily: 'Cormorant Garamond, serif' }}>
-            Whiscraft is coming to protect the craft.
-          </h1>
-          <button 
-            onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-            style={{ backgroundColor: '#000', color: '#FFF', padding: '18px 42px', border: 'none', fontSize: '11px', letterSpacing: '0.15em', fontWeight: '600', cursor: 'pointer' }}
-          >
-            EXPLORE CURATED VAULT
+        <div style={{ maxWidth: '900px' }}>
+          <h1 style={styles.tagline}>Whiscraft is coming to protect the craft.</h1>
+          <button style={styles.btnMain} onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
+            Secure My Spot
           </button>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '10px', fontWeight: '700', letterSpacing: '0.1em' }}>
-          <div>🟢 VAULT SYNC ACTIVE</div>
-          <div>© 2026 WHISCRAFT</div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', fontWeight: '700', letterSpacing: '0.15em' }}>
+          <div><span style={{ color: '#C1FF00' }}>●</span> VAULT SYNC ACTIVE</div>
+          <div>EXPLORE CURATED VAULT ↓</div>
         </div>
       </section>
 
-      {/* --- SECTION 2: DYNAMIC LIBRARY --- */}
-      <section style={{ padding: '120px 60px' }}>
-        <h2 style={{ fontSize: '64px', fontWeight: '300', fontStyle: 'italic', marginBottom: '80px', fontFamily: 'Cormorant Garamond, serif' }}>The Curated Library.</h2>
-        
+      {/* --- SECTION 2: CURATED LIBRARY --- */}
+      <section style={styles.vaultSection} id="vault">
+        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '64px', fontWeight: '300', fontStyle: 'italic', marginBottom: '80px' }}>
+          The Curated Library.
+        </h2>
+
         {loading ? (
-          <p style={{ textAlign: 'center', fontSize: '12px', color: '#999' }}>CONNECTING TO VAULT...</p>
+          <div style={{ textAlign: 'center', fontSize: '12px', color: '#6B6B6B' }}>SYNCING WITH VAULT...</div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '40px' }}>
-            {products.map((item) => (
+          <div style={styles.productGrid}>
+            {products.map(item => (
               <div key={item.id} onClick={() => setSelectedProduct(item)} style={{ cursor: 'pointer' }}>
-                <div style={{ width: '100%', aspectRatio: '4/5', overflow: 'hidden', borderRadius: '2px', marginBottom: '20px' }}>
+                <div style={{ width: '100%', aspectRatio: '4/5', overflow: 'hidden', borderRadius: '2px', marginBottom: '24px', backgroundColor: '#EEE' }}>
                   <img src={item.media_url} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
-                <div style={{ fontSize: '10px', fontWeight: '700', color: '#6B6B6B', textTransform: 'uppercase', marginBottom: '5px' }}>{item.category}</div>
-                <div style={{ fontSize: '24px', fontFamily: 'Cormorant Garamond, serif', fontStyle: 'italic' }}>{item.title}</div>
+                <div style={{ fontSize: '10px', fontWeight: '700', color: '#6B6B6B', textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '0.1em' }}>{item.category}</div>
+                <div style={{ fontSize: '28px', fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic' }}>{item.title}</div>
               </div>
             ))}
           </div>
         )}
       </section>
 
-      {/* --- PRODUCT MODAL --- */}
+      {/* --- PRODUCT WINDOW MODAL --- */}
       {selectedProduct && (
-        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '40px' }}>
-          <div style={{ backgroundColor: '#FFF', width: '100%', maxWidth: '1100px', height: '80vh', display: 'flex', position: 'relative', borderRadius: '4px', overflow: 'hidden' }}>
-            <button 
-              onClick={() => setSelectedProduct(null)}
-              style={{ position: 'absolute', top: '20px', right: '20px', border: 'none', background: 'none', fontWeight: '700', fontSize: '10px', cursor: 'pointer' }}
-            >
-              CLOSE [X]
-            </button>
+        <div style={styles.modalOverlay} onClick={(e) => e.target === e.currentTarget && setSelectedProduct(null)}>
+          <div style={{ backgroundColor: '#FFF', width: '100%', maxWidth: '1100px', height: '85vh', display: 'flex', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
+            <button onClick={() => setSelectedProduct(null)} style={{ position: 'absolute', top: '30px', right: '30px', border: 'none', background: 'none', fontWeight: '800', fontSize: '10px', cursor: 'pointer' }}>CLOSE [X]</button>
             
-            <div style={{ flex: 1.5, backgroundColor: '#F9F9F9', overflowY: 'auto', padding: '40px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-              <img src={selectedProduct.media_url} alt="Product" style={{ width: isExpanded ? '100%' : '450px', transition: '0.3s' }} />
-              <button onClick={() => setIsExpanded(!isExpanded)} style={{ fontSize: '10px', textDecoration: 'underline', cursor: 'pointer', border: 'none', background: 'none' }}>
-                {isExpanded ? 'REDUCE VIEW' : 'EXPAND VIEW'}
+            <div style={{ flex: 1.4, overflowY: 'auto', padding: '40px', backgroundColor: '#FCFCFC', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '40px', borderRight: '1px solid #E8E8E8' }}>
+              <img src={selectedProduct.media_url} alt="View" style={{ width: isExpanded ? '100%' : '450px', height: 'auto', transition: '0.5s' }} />
+              <button onClick={() => setIsExpanded(!isExpanded)} style={{ fontSize: '10px', textDecoration: 'underline', fontWeight: '700', cursor: 'pointer', border: 'none', background: 'none' }}>
+                {isExpanded ? '[–] REDUCE VIEW' : '[+] EXPAND IMAGES'}
               </button>
             </div>
 
             <div style={{ width: '400px', padding: '60px 40px', display: 'flex', flexDirection: 'column' }}>
-              <span style={{ color: '#2E5BFF', fontSize: '10px', fontWeight: '700', letterSpacing: '0.1em' }}>{selectedProduct.category}</span>
-              <h1 style={{ fontSize: '42px', fontFamily: 'Cormorant Garamond, serif', fontStyle: 'italic', margin: '20px 0' }}>{selectedProduct.title}</h1>
-              <p style={{ fontSize: '14px', lineHeight: '1.6', color: '#6B6B6B', marginBottom: '40px' }}>{selectedProduct.description}</p>
+              <span style={{ color: '#2E5BFF', fontSize: '10px', fontWeight: '700', letterSpacing: '0.2em' }}>{selectedProduct.category}</span>
+              <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '42px', fontStyle: 'italic', margin: '20px 0' }}>{selectedProduct.title}</h1>
+              <p style={{ fontSize: '14px', lineHeight: '1.8', color: '#6B6B6B', marginBottom: '40px' }}>{selectedProduct.description}</p>
               
-              <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {selectedProduct.amazon_link ? (
-                  <a href={selectedProduct.amazon_link} target="_blank" rel="noreferrer" style={{ backgroundColor: '#000', color: '#FFF', textAlign: 'center', padding: '18px', textDecoration: 'none', fontSize: '11px', fontWeight: '600' }}>TAKE ME TO PRODUCT</a>
-                ) : (
-                  <button style={{ backgroundColor: '#000', color: '#FFF', padding: '18px', border: 'none', fontSize: '11px', fontWeight: '600' }}>ADD TO CART</button>
-                )}
-                <button style={{ border: '1px solid #000', padding: '18px', background: 'none', fontSize: '11px', fontWeight: '600' }}>ADD TO SHOPPING LIST</button>
+              <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <a href={selectedProduct.amazon_link} target="_blank" rel="noreferrer" style={{ ...styles.btnMain, textAlign: 'center', textDecoration: 'none' }}>Take Me To Product</a>
+                <button style={{ padding: '18px', background: 'none', border: '1px solid #000', fontSize: '11px', fontWeight: '600', cursor: 'pointer' }}>Add to Shopping List</button>
               </div>
             </div>
           </div>
