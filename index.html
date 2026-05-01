@@ -25,110 +25,106 @@
             --font-display: 'Cormorant Garamond', serif;
             --font-ui: 'Inter', sans-serif;
         }
-        html, body { 
+        
+        html { scroll-behavior: smooth; }
+        body { 
             font-family: var(--font-ui); 
             background: var(--paper-white); 
             color: var(--black); 
-            height: 100%;
             -webkit-font-smoothing: antialiased;
-            overflow: hidden;
         }
 
-        .landing-wrap {
-            height: 100vh; width: 100vw; position: relative;
+        /* --- 1. HERO LANDING SECTION --- */
+        .landing-hero {
+            height: 100vh; width: 100%; position: relative;
             background: url('https://res.cloudinary.com/dsviustds/image/upload/v1777284354/make_it_more_202604271405_vzrvsi.jpg') no-repeat center center;
             background-size: cover;
             display: flex; flex-direction: column; justify-content: space-between; padding: 60px;
         }
         
-        .gradient-overlay {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 40vh;
-            background: linear-gradient(to top, rgba(249, 249, 249, 1) 0%, rgba(249, 249, 249, 0.95) 25%, rgba(249, 249, 249, 0) 100%);
-            z-index: 1;
-            pointer-events: none;
-        }
+        .nav-top { display: flex; justify-content: space-between; align-items: center; z-index: 10; }
+        .landing-logo { height: 28px; width: auto; cursor: pointer; }
 
-        .landing-logo { height: 32px; width: auto; align-self: flex-start; z-index: 2; cursor: pointer; }
-        
-        .hero-container { 
+        .hero-content { 
             max-width: 900px; 
-            animation: fadeIn 1.5s ease-out; 
             z-index: 2;
-            margin-top: -10vh;
+            margin-top: -5vh;
         }
 
         .tagline {
             font-family: var(--font-display);
-            font-size: clamp(42px, 6vw, 72px);
-            font-weight: 300; letter-spacing: -0.02em; line-height: 1.05;
-            margin-bottom: 32px; color: var(--black);
+            font-size: clamp(48px, 6vw, 82px);
+            font-weight: 300; letter-spacing: -0.02em; line-height: 1.0;
+            margin-bottom: 40px; color: var(--black);
             font-variant-ligatures: common-ligatures;
         }
 
-        .cta-btn {
+        /* --- 2. CTA & BUTTONS --- */
+        .btn-main {
             background: var(--black); color: white; border: none;
-            padding: 18px 42px; font-size: 11px; letter-spacing: 0.15em;
+            padding: 20px 48px; font-size: 11px; letter-spacing: 0.18em;
             font-weight: 600; text-transform: uppercase; cursor: pointer;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             display: inline-flex; align-items: center; justify-content: center;
             text-decoration: none;
         }
-        .cta-btn:hover { background: var(--cobalt); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(46, 91, 255, 0.2); }
+        .btn-main:hover { background: var(--cobalt); transform: translateY(-2px); box-shadow: 0 15px 40px rgba(46, 91, 255, 0.2); }
 
-        .footer-nav { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding-top: 30px; z-index: 2; position: relative;
+        .btn-outline {
+            background: none; border: 1px solid var(--black); color: var(--black);
+            padding: 18px 40px; font-size: 11px; letter-spacing: 0.15em; font-weight: 600; text-transform: uppercase;
+            width: 100%; cursor: pointer; transition: 0.3s;
         }
+        .btn-outline:hover { border-color: var(--cobalt); color: var(--cobalt); }
 
-        .status-pill { 
-            font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; 
-            display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--black);
-        }
-        .dot { width: 7px; height: 7px; background: var(--acid-green); border-radius: 50%; box-shadow: 0 0 12px var(--acid-green); }
+        /* --- 3. CURATED VAULT SECTION --- */
+        .vault-section { padding: 120px 60px; background: var(--paper-white); position: relative; }
+        .vault-header { margin-bottom: 80px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .vault-title { font-family: var(--font-display); font-size: 64px; font-weight: 300; font-style: italic; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; }
         
-        .vault-access { 
-            display: flex; align-items: center; gap: 20px; cursor: pointer; text-decoration: none;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 12px 28px;
-            border-radius: 100px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        .product-card { 
+            cursor: pointer; transition: transform 0.4s ease; 
+            border-bottom: 1px solid transparent; padding-bottom: 20px;
         }
+        .product-card:hover { transform: translateY(-8px); }
+        .product-card:hover .card-title { border-bottom: 1px solid var(--black); }
 
-        .vault-access span { 
-            font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700;
-            color: var(--black);
-        }
+        .card-img-wrap { width: 100%; aspect-ratio: 4/5; overflow: hidden; background: #eee; border-radius: 2px; margin-bottom: 24px; }
+        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
 
-        .arrow-circle {
-            width: 40px; height: 40px; background: var(--cobalt); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; color: white;
-            transition: all 0.4s;
-        }
+        .card-meta { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px; }
+        .card-title { font-family: var(--font-display); font-size: 28px; font-weight: 300; font-style: italic; display: inline-block; transition: 0.3s; }
 
-        .vault-access:hover { 
-            background: #fff; transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); border-color: var(--cobalt);
-        }
-
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        /* --- 4. WINDOWED MODAL VIEWER --- */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 40px; }
         .modal-window { 
-            width: 80vw; height: 80vh; background: white; display: flex; overflow: hidden; position: relative;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.3); border-radius: 8px;
-            animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 100%; max-width: 1100px; height: 85vh; background: white; display: flex; overflow: hidden; position: relative;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.2); border-radius: 4px;
+            animation: modalPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .modal-image-sec { flex: 1.3; overflow-y: auto; background: #fff; padding: 40px; display: flex; flex-direction: column; align-items: center; gap: 30px; border-right: 1px solid var(--gray-200); }
-        .modal-image-sec img { width: 100%; max-width: 480px; height: auto; transition: max-width 0.5s ease; border-radius: 4px; }
-        .modal-image-sec img.expanded { max-width: 100%; }
-        .modal-info-sec { width: 420px; padding: 60px 40px; overflow-y: auto; display: flex; flex-direction: column; }
+        .modal-gallery { flex: 1.4; overflow-y: auto; background: #fcfcfc; padding: 40px; display: flex; flex-direction: column; align-items: center; gap: 40px; border-right: 1px solid var(--gray-200); }
+        .modal-gallery img { width: 100%; max-width: 450px; height: auto; transition: 0.5s cubic-bezier(0.16,1,0.3,1); border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .modal-gallery img.expanded { max-width: 100%; }
         
-        .vault-wrap { padding: 60px; height: 100vh; overflow-y: auto; background: var(--paper-white); }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .modal-content { width: 400px; padding: 60px 40px; overflow-y: auto; display: flex; flex-direction: column; }
+        .close-trigger { position: absolute; top: 30px; right: 30px; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; cursor: pointer; border: none; background: none; }
+
+        /* --- 5. FOOTER SAFE ZONE --- */
+        .footer-gradient {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 15vh;
+            background: linear-gradient(to top, rgba(249,249,249,1), rgba(249,249,249,0));
+            pointer-events: none; z-index: 1;
+        }
+
+        @keyframes modalPop { from { opacity: 0; transform: scale(0.98) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+        @media (max-width: 900px) {
+            .modal-window { flex-direction: column; height: 95vh; }
+            .modal-content { width: 100%; height: auto; }
+            .vault-title { font-size: 42px; }
+        }
     </style>
 </head>
 <body>
@@ -137,11 +133,12 @@
 <script type="text/babel">
 const { useState } = React;
 
+// ── PRODUCT TEMPLATE — Add new items to this array ───────────
 const mockData = [
   {
     id: 1,
     title: "Signature Camo Essential",
-    category: "Lifestyle",
+    category: "Lifestyle / Gear",
     mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1776947518/Side_1_c8qyfs.png", 
     amazonLink: "https://amzn.to/3QSjcmi", 
     description: "The debut Whiscraft essential. A heavy-weight, breathable cotton blend crafted for the perfect oversized silhouette. Engineered for absolute comfort without compromising the street aesthetic.",
@@ -149,140 +146,127 @@ const mockData = [
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947518/Side_1_c8qyfs.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_2_ftdjr3.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_3_lelwzf.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_4_yst9el.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_5_nhkzqb.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_6_qt7tvh.png"
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_4_yst9el.png"
     ]
   },
   {
     id: 2,
     title: "Women's Floral Maxi",
-    category: "Lifestyle",
+    category: "Curation / Texture",
     mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_visually_engaging_202604251609_x9idxh.jpg", 
     amazonLink: "https://amzn.to/41WZSqE", 
-    description: "The Women's Floral Maxi is a study in fluid elegance. Designed with a deep V-neckline and cascading floral tiers, this piece transitions seamlessly from golden-hour cocktails to late-night soirées. Crafted from a lightweight, breathable weave that moves with you, it’s the ultimate investment for the discerning occasion wardrobe.",
+    description: "A study in fluid elegance. Designed with a deep V-neckline and cascading floral tiers, this piece transitions seamlessly from architectural design sessions to evening settlement.",
     slides: [
       "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_visually_engaging_202604251609_x9idxh.jpg",
       "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_bright__airy_202604251609_k52m2c.jpg",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1777285801/swap_the_dress_202604251610_oq8jqf.jpg",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1777285799/A_high-resolution_photograph_202604251609_1_dshjej.jpg",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1777285802/An_extreme_macro-photography_202604251608_qlntzd.jpg"
+      "https://res.cloudinary.com/dsviustds/image/upload/v1777285801/swap_the_dress_202604251610_oq8jqf.jpg"
     ]
   },
   {
-    id: 4,
-    title: "Retro Collage Oversized Tee",
-    category: "Streetwear",
+    id: 3,
+    title: "Retro Collage Oversized",
+    category: "Streetwear / Brand",
     mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/4_n81bt4.png", 
-    "amazonLink": "https://amzn.to/4n8KpgW", 
-    "description": "Defined by detail. Part of the Whiscraft Curated Selection, where high-end fashion meets street-level grit. This oversized heavyweight tee features a high-contrast retro-collage design, blending hand-drawn textures and Japanese typography for a raw, DIY-punk aesthetic[cite: 24, 39]. Crafted for the modern wardrobe, it offers a premium cotton feel that balances lifestyle comfort with a bold, artistic edge[cite: 10, 12].",
-    "slides": [
+    amazonLink: "https://amzn.to/4n8KpgW", 
+    description: "Defined by detail. This oversized heavyweight tee features a high-contrast retro-collage design, blending hand-drawn textures and Japanese typography for a raw, DIY-punk aesthetic.",
+    slides: [
       "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/4_n81bt4.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/2_cmrlpu.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1777630631/1_udqb4w.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1777630631/3_mo1am3.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1777630631/1_udqb4w.png"
     ]
-}
+  }
 ];
 
 const App = () => {
-  const [view, setView] = useState('landing'); 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const LandingPage = () => (
-    <div className="landing-wrap">
-      <div className="gradient-overlay"></div>
-      <img src="https://res.cloudinary.com/dsviustds/image/upload/v1776948035/Whiscraft-logo_logo-Dark_1035x267_xanion.png" className="landing-logo" alt="Whiscraft Logo" />
-      
-      <div className="hero-container">
-        <h1 className="tagline">We’re putting an eye on your assets. Literally.</h1>
-        <button className="cta-btn" onClick={() => setView('account')}>Secure My Spot</button>
-      </div>
-
-      <div className="footer-nav">
-        <div className="status-pill"><div className="dot"></div> Encryption Protocols Active</div>
-        <div className="vault-access" onClick={() => setView('vault')}>
-          <span>Explore Curated Vault</span>
-          <div className="arrow-circle">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const VaultPage = () => (
-    <div className="vault-wrap">
-      <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: '80px'}}>
-        <img src="https://res.cloudinary.com/dsviustds/image/upload/v1776948035/Whiscraft-logo_logo-Dark_1035x267_xanion.png" height="20" onClick={() => setView('landing')} style={{cursor:'pointer'}} />
-        <div style={{display:'flex', gap:'30px'}}>
-            <button style={{background:'none', border:'none', cursor:'pointer', fontSize:'11px', letterSpacing:'0.15em', fontWeight:'600'}} onClick={() => setView('account')}>ACCOUNT</button>
-            <button style={{background:'none', border:'none', cursor:'pointer', fontSize:'11px', letterSpacing:'0.15em', fontWeight:'600'}} onClick={() => setView('landing')}>EXIT</button>
-        </div>
-      </div>
-      <h2 style={{fontFamily:'var(--font-display)', fontSize:'64px', fontWeight:'300', marginBottom:'60px'}}>The Curated Vault.</h2>
-      <div style={{columns: '4', columnGap: '30px'}}>
-        {mockData.map(item => (
-          <div key={item.id} style={{breakInside:'avoid', marginBottom:'40px', cursor:'pointer'}} onClick={() => setSelectedProduct(item)}>
-            <img src={item.mediaUrl} style={{width:'100%', borderRadius:'2px'}} alt={item.title} />
-            <div style={{padding:'20px 0', borderBottom:'1px solid var(--gray-200)'}}>
-              <div style={{fontFamily:'var(--font-display)', fontSize:'24px', fontStyle:'italic'}}>{item.title}</div>
-              <div style={{fontSize:'10px', color:'var(--gray-500)', marginTop:'10px', textTransform:'uppercase', letterSpacing:'0.12em', fontWeight:'600'}}>{item.category}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
   return (
-    <div>
-      {view === 'landing' && <LandingPage />}
-      {view === 'vault' && <VaultPage />}
-      {view === 'account' && (
-        <div style={{height:'100vh', display:'flex', alignItems:'center', justifyContent:'center'}}>
-            <div style={{maxWidth:'360px', width:'100%'}}>
-                <h2 style={{fontFamily:'var(--font-display)', fontSize:'42px', marginBottom:'32px'}}>Sign In</h2>
-                <input type="email" placeholder="Professional Email" style={{width:'100%', padding:'18px', border:'none', borderBottom:'1px solid #000', marginBottom:'16px', outline:'none', fontSize:'13px'}} />
-                <input type="password" placeholder="Password" style={{width:'100%', padding:'18px', border:'none', borderBottom:'1px solid #000', marginBottom:'32px', outline:'none', fontSize:'13px'}} />
-                <button className="cta-btn" style={{width:'100%'}} onClick={() => setView('landing')}>Enter Vault</button>
-                <p style={{fontSize:'11px', textAlign:'center', marginTop:'30px', color:'#999', cursor:'pointer'}} onClick={() => setView('landing')}>BACK TO STEALTH MODE</p>
-            </div>
-        </div>
-      )}
-
-      {selectedProduct && (
-        <div className="modal-overlay">
-          <div className="modal-window">
-            <button style={{position:'absolute', top:'24px', right:'24px', background:'none', border:'none', cursor:'pointer', fontWeight:'700', fontSize:'11px', letterSpacing:'0.1em'}} onClick={() => {setSelectedProduct(null); setIsExpanded(false);}}>CLOSE [X]</button>
-            <div className="modal-image-sec">
-                <span style={{fontSize:'10px', letterSpacing:'0.15em', cursor:'pointer', textDecoration:'underline', fontWeight:'600'}} onClick={() => setIsExpanded(!isExpanded)}>
-                    {isExpanded ? "[–] REDUCE GALLERY SIZE" : "[+] EXPAND GALLERY VIEW"}
-                </span>
-                {selectedProduct.slides.map((url, i) => (
-                    <img key={i} src={url} className={isExpanded ? 'expanded' : ''} alt={`View ${i}`} />
-                ))}
-            </div>
-            <div className="modal-info-sec">
-                <span style={{fontSize:'10px', color:'var(--cobalt)', letterSpacing:'0.2em', fontWeight:'700'}}>{selectedProduct.category}</span>
-                <h1 style={{fontFamily:'var(--font-display)', fontSize:'48px', margin:'20px 0', fontStyle:'italic', borderBottom:'1px solid #000', paddingBottom:'16px'}}>{selectedProduct.title}</h1>
-                <p style={{fontSize:'14px', lineHeight:'1.8', color:'var(--gray-500)', marginBottom:'40px'}}>{selectedProduct.description}</p>
-                
-                <a href={selectedProduct.amazonLink} target="_blank" className="cta-btn" style={{marginBottom:'16px'}}>
-                    Take Me To Product
-                </a>
-                
-                <button style={{width:'100%', padding:'18px', background:'none', border:'1px solid #000', cursor:'pointer', fontSize:'11px', letterSpacing:'0.15em', fontWeight:'700', textTransform:'uppercase'}}>Add to Shopping List</button>
-                
-                <div style={{marginTop:'auto', borderTop:'1px solid var(--gray-200)', paddingTop:'30px'}}>
-                    <span style={{fontSize:'10px', fontWeight:'700', letterSpacing:'0.1em', textTransform:'uppercase'}}>Folder Management</span>
-                    <p style={{fontSize:'12px', color:'#999', marginTop:'12px', lineHeight:'1.5'}}>Sign in to organize your curated gear into client-specific project folders.</p>
+    <div className="main-container">
+        
+        {/* --- SECTION 1: COMING SOON LANDING --- */}
+        <section className="landing-hero">
+            <div className="nav-top">
+                <img src="https://res.cloudinary.com/dsviustds/image/upload/v1776948035/Whiscraft-logo_logo-Dark_1035x267_xanion.png" className="landing-logo" alt="Whiscraft Logo" />
+                <div style={{display:'flex', gap:'30px', alignItems:'center'}}>
+                    <span style={{fontSize:'10px', letterSpacing:'0.2em', fontWeight:'700'}}>VAULT STATUS: 🟢 LIVE</span>
                 </div>
             </div>
-          </div>
-        </div>
-      )}
+
+            <div className="hero-content">
+                <h1 className="tagline">Whiscraft is coming to protect the craft.</h1>
+                <button className="btn-main" onClick={() => window.scrollTo(0, window.innerHeight)}>Explore Curated Vault</button>
+            </div>
+
+            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', z-index:2}}>
+                 <div style={{fontSize:'10px', textTransform:'uppercase', letterSpacing:'0.1em', fontWeight:'700'}}>
+                    © 2026 Whiscraft / Industrial Noir
+                 </div>
+                 <div style={{display:'flex', gap:'10px', alignItems:'center'}}>
+                    <span style={{fontSize:'11px', fontWeight:'600'}}>Scroll to View Library</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+                 </div>
+            </div>
+            <div className="footer-gradient"></div>
+        </section>
+
+        {/* --- SECTION 2: CURATED LIBRARY --- */}
+        <section className="vault-section" id="vault">
+            <div className="vault-header">
+                <h2 className="vault-title">The Curated Library</h2>
+                <p style={{maxWidth:'250px', fontSize:'12px', color:'var(--gray-500)', lineHeight:'1.6'}}>A selection of gear and garments engineered for the high-end creative professional.</p>
+            </div>
+
+            <div className="product-grid">
+                {mockData.map(item => (
+                    <div key={item.id} className="product-card" onClick={() => setSelectedProduct(item)}>
+                        <div className="card-img-wrap">
+                            <img src={item.mediaUrl} alt={item.title} />
+                        </div>
+                        <div className="card-meta">{item.category}</div>
+                        <div className="card-title">{item.title}</div>
+                    </div>
+                ))}
+            </div>
+        </section>
+
+        {/* --- PRODUCT WINDOW MODAL --- */}
+        {selectedProduct && (
+            <div className="modal-overlay" onClick={(e) => e.target.className === 'modal-overlay' && setSelectedProduct(null)}>
+                <div className="modal-window">
+                    <button className="close-trigger" onClick={() => {setSelectedProduct(null); setIsExpanded(false);}}>CLOSE [X]</button>
+                    
+                    <div className="modal-gallery">
+                        <div style={{width:'100%', display:'flex', justifyContent:'space-between', marginBottom:'10px'}}>
+                            <span style={{fontSize:'10px', fontWeight:'700', color:'var(--gray-500)'}}>GALLERY VIEW</span>
+                            <span style={{fontSize:'10px', letterSpacing:'0.1em', cursor:'pointer', textDecoration:'underline', fontWeight:'700'}} onClick={() => setIsExpanded(!isExpanded)}>
+                                {isExpanded ? "[–] MINIMIZE IMAGES" : "[+] EXPAND IMAGES"}
+                            </span>
+                        </div>
+                        {selectedProduct.slides.map((url, i) => (
+                            <img key={i} src={url} className={isExpanded ? 'expanded' : ''} alt={`View ${i}`} />
+                        ))}
+                    </div>
+
+                    <div className="modal-content">
+                        <span style={{fontSize:'10px', color:'var(--cobalt)', letterSpacing:'0.2em', fontWeight:'700'}}>{selectedProduct.category}</span>
+                        <h1 style={{fontFamily:'var(--font-display)', fontSize:'42px', margin:'20px 0', fontStyle:'italic'}}>{selectedProduct.title}</h1>
+                        <p style={{fontSize:'14px', lineHeight:'1.8', color:'var(--gray-500)', marginBottom:'40px'}}>{selectedProduct.description}</p>
+                        
+                        <div style={{display:'flex', flexDirection:'column', gap:'12px', marginTop:'auto'}}>
+                            <a href={selectedProduct.amazonLink} target="_blank" className="btn-main">Take Me To Product</a>
+                            <button className="btn-outline">Add to Shopping List</button>
+                        </div>
+
+                        <div style={{marginTop:'40px', paddingTop:'30px', borderTop:'1px solid var(--gray-200)'}}>
+                            <span style={{fontSize:'10px', fontWeight:'700', letterSpacing:'0.1em', textTransform:'uppercase'}}>Vault Security</span>
+                            <p style={{fontSize:'12px', color:'#999', marginTop:'12px'}}>Sign in to sync your curated lists with the Whiscraft Drive.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )}
+
     </div>
   );
 };
