@@ -1,69 +1,117 @@
- html { scroll-behavior: smooth; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whiscraft — Protect the Craft</title>
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dsviustds/image/upload/v1777283676/Whiscraft-logo_Logomark-Dark_500x500_pmthhb.png">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --cobalt: #2E5BFF;
+            --acid-green: #C1FF00;
+            --paper-white: #F9F9F9;
+            --black: #000000;
+            --gray-500: #6B6B6B;
+            --gray-200: #E8E8E8;
+            --font-display: 'Cormorant Garamond', serif;
+            --font-ui: 'Inter', sans-serif;
+        }
+        
+        html { scroll-behavior: smooth; }
         body { 
             font-family: var(--font-ui); 
-            background: var(--paper-white); 
             background: #FFFFFF; 
             color: var(--black); 
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 1. HERO LANDING SECTION --- */
         /* --- LANDING HERO --- */
         .landing-hero {
             height: 100vh; width: 100%; position: relative;
             background: url('https://res.cloudinary.com/dsviustds/image/upload/v1777284354/make_it_more_202604271405_vzrvsi.jpg') no-repeat center center;
-@@ -59,7 +59,7 @@
+            background-size: cover;
+            display: flex; flex-direction: column; justify-content: space-between; padding: 60px;
+        }
+        
+        .nav-top { display: flex; justify-content: space-between; align-items: center; z-index: 10; }
+        .landing-logo { height: 28px; width: auto; cursor: pointer; }
+
+        .hero-content { 
+            max-width: 900px; 
+            z-index: 2;
+            margin-top: -5vh;
+        }
+
+        .tagline {
+            font-family: var(--font-display);
+            font-size: clamp(48px, 6vw, 82px);
+            font-weight: 300; letter-spacing: -0.02em; line-height: 1.0;
+            margin-bottom: 40px; color: var(--black);
             font-variant-ligatures: common-ligatures;
         }
 
-        /* --- 2. CTA & BUTTONS --- */
         /* --- CTAs --- */
         .btn-main {
             background: var(--black); color: white; border: none;
             padding: 20px 48px; font-size: 11px; letter-spacing: 0.18em;
-@@ -77,27 +77,26 @@
+            font-weight: 600; text-transform: uppercase; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex; align-items: center; justify-content: center;
+            text-decoration: none;
+        }
+        .btn-main:hover { background: var(--cobalt); transform: translateY(-2px); box-shadow: 0 15px 40px rgba(46, 91, 255, 0.2); }
+
+        .btn-outline {
+            background: none; border: 1px solid var(--black); color: var(--black);
+            padding: 18px 40px; font-size: 11px; letter-spacing: 0.15em; font-weight: 600; text-transform: uppercase;
+            width: 100%; cursor: pointer; transition: 0.3s;
         }
         .btn-outline:hover { border-color: var(--cobalt); color: var(--cobalt); }
 
-        /* --- 3. CURATED VAULT SECTION --- */
-        .vault-section { padding: 120px 60px; background: var(--paper-white); position: relative; }
         /* --- LIBRARY SECTION --- */
         .vault-section { padding: 120px 60px; background: #FFFFFF; position: relative; }
         .vault-header { margin-bottom: 80px; display: flex; justify-content: space-between; align-items: flex-end; }
         .vault-title { font-family: var(--font-display); font-size: 64px; font-weight: 300; font-style: italic; }
 
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; }
-
+        
         .product-card { 
             cursor: pointer; transition: transform 0.4s ease; 
             border-bottom: 1px solid transparent; padding-bottom: 20px;
         }
         .product-card:hover { transform: translateY(-8px); }
-        .product-card:hover .card-title { border-bottom: 1px solid var(--black); }
 
         .card-img-wrap { width: 100%; aspect-ratio: 4/5; overflow: hidden; background: #eee; border-radius: 2px; margin-bottom: 24px; }
         .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
 
         .card-meta { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px; }
-        .card-title { font-family: var(--font-display); font-size: 28px; font-weight: 300; font-style: italic; display: inline-block; transition: 0.3s; }
         .card-title { font-family: var(--font-display); font-size: 28px; font-weight: 300; font-style: italic; display: inline-block; }
 
-        /* --- 4. WINDOWED MODAL VIEWER --- */
         /* --- WINDOWED MODAL --- */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 40px; }
         .modal-window { 
             width: 100%; max-width: 1100px; height: 85vh; background: white; display: flex; overflow: hidden; position: relative;
-@@ -111,19 +110,20 @@
+            box-shadow: 0 40px 100px rgba(0,0,0,0.2); border-radius: 4px;
+            animation: modalPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-gallery { flex: 1.4; overflow-y: auto; background: #fcfcfc; padding: 40px; display: flex; flex-direction: column; align-items: center; gap: 40px; border-right: 1px solid var(--gray-200); }
+        .modal-gallery img { width: 100%; max-width: 450px; height: auto; transition: 0.5s cubic-bezier(0.16,1,0.3,1); border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .modal-gallery img.expanded { max-width: 100%; }
+        
         .modal-content { width: 400px; padding: 60px 40px; overflow-y: auto; display: flex; flex-direction: column; }
         .close-trigger { position: absolute; top: 30px; right: 30px; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; cursor: pointer; border: none; background: none; }
 
-        /* --- 5. FOOTER SAFE ZONE --- */
-        .footer-gradient {
-            position: absolute; bottom: 0; left: 0; right: 0; height: 15vh;
-            background: linear-gradient(to top, rgba(249,249,249,1), rgba(249,249,249,0));
-            pointer-events: none; z-index: 1;
-        .footer-nav { 
+        /* --- FOOTER NAVIGATION --- */
+        .hero-footer-nav { 
             display: flex; justify-content: space-between; align-items: center; z-index: 2; 
             background: linear-gradient(to top, rgba(255,255,255,1) 40%, rgba(255,255,255,0) 100%);
             padding: 40px 60px; margin-top: -100px;
@@ -77,37 +125,37 @@
         @media (max-width: 900px) {
             .modal-window { flex-direction: column; height: 95vh; }
             .modal-content { width: 100%; height: auto; }
-            .vault-title { font-size: 42px; }
         }
     </style>
 </head>
-@@ -133,7 +133,7 @@
+<body>
+<div id="root"></div>
+
 <script type="text/babel">
 const { useState } = React;
 
-// ── PRODUCT TEMPLATE — Add new items to this array ───────────
-// ── PRODUCT TEMPLATE — Add new objects here to expand library ───────────
+// ── PRODUCT_TEMPLATE — Add new objects here to expand the library ───────────
 const mockData = [
   {
     id: 1,
-@@ -146,75 +146,61 @@
+    title: "Signature Camo Essential",
+    category: "Lifestyle / Gear",
+    mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1776947518/Side_1_c8qyfs.png", 
+    amazonLink: "https://amzn.to/3QSjcmi", 
+    description: "The debut Whiscraft essential. A heavy-weight, breathable cotton blend crafted for the perfect oversized silhouette. Engineered for absolute comfort without compromising the street aesthetic.",
+    slides: [
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947518/Side_1_c8qyfs.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_2_ftdjr3.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_3_lelwzf.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_4_yst9el.png"
-      "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_4_yst9el.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_5_nhkzqb.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_6_qt7tvh.png"
     ]
   },
   {
     id: 2,
     title: "Women's Floral Maxi",
-    category: "Curation / Texture",
-    category: "Lifestyle / Texture",
+    category: "Lifestyle / Clothing",
     mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_visually_engaging_202604251609_x9idxh.jpg", 
     amazonLink: "https://amzn.to/41WZSqE", 
-    description: "A study in fluid elegance. Designed with a deep V-neckline and cascading floral tiers, this piece transitions seamlessly from architectural design sessions to evening settlement.",
     description: "The Women's Floral Maxi is a study in fluid elegance. Designed with a deep V-neckline and cascading floral tiers, this piece transitions seamlessly from architecture sessions to golden-hour cocktails.",
     slides: [
       "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_visually_engaging_202604251609_x9idxh.jpg",
@@ -117,11 +165,11 @@ const mockData = [
   },
   {
     id: 3,
-    title: "Retro Collage Oversized",
-    category: "Streetwear / Brand",
+    title: "Retro Collage Oversized Tee",
+    category: "Lifestyle / Clothing",
     mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/4_n81bt4.png", 
-    amazonLink: "https://amzn.to/4n8KpgW", 
-    description: "Defined by detail. This oversized heavyweight tee features a high-contrast retro-collage design, blending hand-drawn textures and Japanese typography for a raw, DIY-punk aesthetic.",
+    amazonLink: "https://amzn.to/3QLVY1i", 
+    description: "Defined by detail. This oversized heavyweight tee features a high-contrast retro-collage design, blending hand-drawn textures and Japanese typography for a raw, DIY-punk aesthetic. Crafted for the modern wardrobe, it offers a premium cotton feel.",
     slides: [
       "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/4_n81bt4.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/2_cmrlpu.png",
@@ -136,34 +184,21 @@ const App = () => {
   const [showAuth, setShowAuth] = useState(false);
 
   return (
-    <div className="main-container">
     <div className="main-wrapper">
-
-        {/* --- SECTION 1: COMING SOON LANDING --- */}
+        
         {/* --- SECTION 1: LANDING --- */}
         <section className="landing-hero">
             <div className="nav-top">
                 <img src="https://res.cloudinary.com/dsviustds/image/upload/v1776948035/Whiscraft-logo_logo-Dark_1035x267_xanion.png" className="landing-logo" alt="Whiscraft Logo" />
-                <div style={{display:'flex', gap:'30px', alignItems:'center'}}>
-                    <span style={{fontSize:'10px', letterSpacing:'0.2em', fontWeight:'700'}}>VAULT STATUS: 🟢 LIVE</span>
-                </div>
                 <button style={{background:'none', border:'none', fontSize:'11px', letterSpacing:'0.1em', fontWeight:'700', cursor:'pointer'}} onClick={() => setShowAuth(true)}>SIGN IN</button>
             </div>
 
             <div className="hero-content">
                 <h1 className="tagline">Whiscraft is coming to protect the craft.</h1>
-                <button className="btn-main" onClick={() => window.scrollTo(0, window.innerHeight)}>Explore Curated Vault</button>
                 <button className="btn-main" onClick={() => setShowAuth(true)}>Secure My Spot</button>
             </div>
 
-            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', z-index:2}}>
-                 <div style={{fontSize:'10px', textTransform:'uppercase', letterSpacing:'0.1em', fontWeight:'700'}}>
-                    © 2026 Whiscraft / Industrial Noir
-                 </div>
-                 <div style={{display:'flex', gap:'10px', alignItems:'center'}}>
-                    <span style={{fontSize:'11px', fontWeight:'600'}}>Scroll to View Library</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
-            <div className="footer-nav">
+            <div className="hero-footer-nav">
                  <div style={{fontSize:'10px', textTransform:'uppercase', letterSpacing:'0.15em', fontWeight:'700'}}><div style={{width:'7px', height:'7px', background:'var(--acid-green)', borderRadius:'50%', display:'inline-block', marginRight:'8px', boxShadow:'0 0 10px var(--acid-green)'}}></div> Beta Access Active</div>
                  <div className="vault-access" onClick={() => window.scrollTo(0, window.innerHeight)}>
                     <span style={{fontSize:'11px', fontWeight:'700', letterSpacing:'0.1em'}}>EXPLORE CURATED VAULT</span>
@@ -172,20 +207,24 @@ const App = () => {
                     </div>
                  </div>
             </div>
-            <div className="footer-gradient"></div>
         </section>
 
-        {/* --- SECTION 2: CURATED LIBRARY --- */}
         {/* --- SECTION 2: LIBRARY --- */}
         <section className="vault-section" id="vault">
             <div className="vault-header">
-                <h2 className="vault-title">The Curated Library</h2>
-                <p style={{maxWidth:'250px', fontSize:'12px', color:'var(--gray-500)', lineHeight:'1.6'}}>A selection of gear and garments engineered for the high-end creative professional.</p>
                 <h2 className="vault-title">The Curated Library.</h2>
             </div>
 
             <div className="product-grid">
-@@ -230,6 +216,19 @@ <h2 className="vault-title">The Curated Library</h2>
+                {mockData.map(item => (
+                    <div key={item.id} className="product-card" onClick={() => setSelectedProduct(item)}>
+                        <div className="card-img-wrap">
+                            <img src={item.mediaUrl} alt={item.title} />
+                        </div>
+                        <div className="card-meta">{item.category}</div>
+                        <div className="card-title">{item.title}</div>
+                    </div>
+                ))}
             </div>
         </section>
 
@@ -205,23 +244,45 @@ const App = () => {
         {/* --- PRODUCT WINDOW MODAL --- */}
         {selectedProduct && (
             <div className="modal-overlay" onClick={(e) => e.target.className === 'modal-overlay' && setSelectedProduct(null)}>
-@@ -240,7 +239,7 @@ <h2 className="vault-title">The Curated Library</h2>
+                <div className="modal-window">
+                    <button className="close-trigger" onClick={() => {setSelectedProduct(null); setIsExpanded(false);}}>CLOSE [X]</button>
+                    
+                    <div className="modal-gallery">
                         <div style={{width:'100%', display:'flex', justifyContent:'space-between', marginBottom:'10px'}}>
                             <span style={{fontSize:'10px', fontWeight:'700', color:'var(--gray-500)'}}>GALLERY VIEW</span>
                             <span style={{fontSize:'10px', letterSpacing:'0.1em', cursor:'pointer', textDecoration:'underline', fontWeight:'700'}} onClick={() => setIsExpanded(!isExpanded)}>
-                                {isExpanded ? "[–] MINIMIZE IMAGES" : "[+] EXPAND IMAGES"}
                                 {isExpanded ? "[–] REDUCE VIEW" : "[+] EXPAND IMAGES"}
                             </span>
                         </div>
                         {selectedProduct.slides.map((url, i) => (
-@@ -259,8 +258,8 @@ <h1 style={{fontFamily:'var(--font-display)', fontSize:'42px', margin:'20px 0',
+                            <img key={i} src={url} className={isExpanded ? 'expanded' : ''} alt={`View ${i}`} />
+                        ))}
+                    </div>
+
+                    <div className="modal-content">
+                        <span style={{fontSize:'10px', color:'var(--cobalt)', letterSpacing:'0.2em', fontWeight:'700'}}>{selectedProduct.category}</span>
+                        <h1 style={{fontFamily:'var(--font-display)', fontSize:'42px', margin:'20px 0', fontStyle:'italic'}}>{selectedProduct.title}</h1>
+                        <p style={{fontSize:'14px', lineHeight:'1.8', color:'var(--gray-500)', marginBottom:'40px'}}>{selectedProduct.description}</p>
+                        
+                        <div style={{display:'flex', flexDirection:'column', gap:'12px', marginTop:'auto'}}>
+                            <a href={selectedProduct.amazonLink} target="_blank" className="btn-main">Take Me To Product</a>
+                            <button className="btn-outline">Add to Shopping List</button>
                         </div>
 
                         <div style={{marginTop:'40px', paddingTop:'30px', borderTop:'1px solid var(--gray-200)'}}>
-                            <span style={{fontSize:'10px', fontWeight:'700', letterSpacing:'0.1em', textTransform:'uppercase'}}>Vault Security</span>
-                            <p style={{fontSize:'12px', color:'#999', marginTop:'12px'}}>Sign in to sync your curated lists with the Whiscraft Drive.</p>
                             <span style={{fontSize:'10px', fontWeight:'700', letterSpacing:'0.1em', textTransform:'uppercase'}}>Project Management</span>
                             <p style={{fontSize:'12px', color:'#999', marginTop:'12px'}}>Sign in to organize your curated gear into client-specific project folders.</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        )}
+
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
