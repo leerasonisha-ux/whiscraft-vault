@@ -110,7 +110,8 @@
         .modal-content { width: 400px; padding: 60px 40px; overflow-y: auto; display: flex; flex-direction: column; }
         .close-trigger { position: absolute; top: 30px; right: 30px; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; cursor: pointer; border: none; background: none; }
 
-        .footer-nav { 
+        /* --- FOOTER NAVIGATION --- */
+        .hero-footer-nav { 
             display: flex; justify-content: space-between; align-items: center; z-index: 2; 
             background: linear-gradient(to top, rgba(255,255,255,1) 40%, rgba(255,255,255,0) 100%);
             padding: 40px 60px; margin-top: -100px;
@@ -133,7 +134,7 @@
 <script type="text/babel">
 const { useState } = React;
 
-// ── PRODUCT TEMPLATE — Add new objects here to expand library ───────────
+// ── PRODUCT_TEMPLATE — Add new objects here to expand the library ───────────
 const mockData = [
   {
     id: 1,
@@ -146,9 +147,7 @@ const mockData = [
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947518/Side_1_c8qyfs.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_2_ftdjr3.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_3_lelwzf.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_4_yst9el.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_5_nhkzqb.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_6_qt7tvh.png"
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_4_yst9el.png"
     ]
   },
   {
@@ -161,22 +160,20 @@ const mockData = [
     slides: [
       "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_visually_engaging_202604251609_x9idxh.jpg",
       "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_bright__airy_202604251609_k52m2c.jpg",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1777285801/swap_the_dress_202604251610_oq8jqf.jpg",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1777285799/A_high-resolution_photograph_202604251609_1_dshjej.jpg"
+      "https://res.cloudinary.com/dsviustds/image/upload/v1777285801/swap_the_dress_202604251610_oq8jqf.jpg"
     ]
   },
-     {
+  {
     id: 3,
     title: "Retro Collage Oversized Tee",
     category: "Lifestyle / Clothing",
     mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/4_n81bt4.png", 
     amazonLink: "https://amzn.to/3QLVY1i", 
-    description: "Defined by detail. Part of the Whiscraft Curated Selection, where high-end fashion meets street-level grit. This oversized heavyweight tee features a high-contrast retro-collage design, blending hand-drawn textures and Japanese typography for a raw, DIY-punk aesthetic[cite: 24, 39]. Crafted for the modern wardrobe, it offers a premium cotton feel that balances lifestyle comfort with a bold, artistic edge[cite: 10, 12].",
+    description: "Defined by detail. This oversized heavyweight tee features a high-contrast retro-collage design, blending hand-drawn textures and Japanese typography for a raw, DIY-punk aesthetic. Crafted for the modern wardrobe, it offers a premium cotton feel.",
     slides: [
       "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/4_n81bt4.png",
       "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/2_cmrlpu.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1777630631/1_udqb4w.png",
-      "https://res.cloudinary.com/dsviustds/image/upload/v1777630631/3_mo1am3.png"
+      "https://res.cloudinary.com/dsviustds/image/upload/v1777630631/1_udqb4w.png"
     ]
   }
 ];
@@ -201,7 +198,7 @@ const App = () => {
                 <button className="btn-main" onClick={() => setShowAuth(true)}>Secure My Spot</button>
             </div>
 
-            <div className="footer-nav">
+            <div className="hero-footer-nav">
                  <div style={{fontSize:'10px', textTransform:'uppercase', letterSpacing:'0.15em', fontWeight:'700'}}><div style={{width:'7px', height:'7px', background:'var(--acid-green)', borderRadius:'50%', display:'inline-block', marginRight:'8px', boxShadow:'0 0 10px var(--acid-green)'}}></div> Beta Access Active</div>
                  <div className="vault-access" onClick={() => window.scrollTo(0, window.innerHeight)}>
                     <span style={{fontSize:'11px', fontWeight:'700', letterSpacing:'0.1em'}}>EXPLORE CURATED VAULT</span>
