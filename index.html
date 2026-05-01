@@ -1,156 +1,227 @@
-import React, { useState, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
+ html { scroll-behavior: smooth; }
+        body { 
+            font-family: var(--font-ui); 
+            background: var(--paper-white); 
+            background: #FFFFFF; 
+            color: var(--black); 
+            -webkit-font-smoothing: antialiased;
+        }
 
-// Secure connection to your Supabase Vault
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL,
-  process.env.REACT_APP_SUPABASE_ANON_KEY
-);
+        /* --- 1. HERO LANDING SECTION --- */
+        /* --- LANDING HERO --- */
+        .landing-hero {
+            height: 100vh; width: 100%; position: relative;
+            background: url('https://res.cloudinary.com/dsviustds/image/upload/v1777284354/make_it_more_202604271405_vzrvsi.jpg') no-repeat center center;
+@@ -59,7 +59,7 @@
+            font-variant-ligatures: common-ligatures;
+        }
+
+        /* --- 2. CTA & BUTTONS --- */
+        /* --- CTAs --- */
+        .btn-main {
+            background: var(--black); color: white; border: none;
+            padding: 20px 48px; font-size: 11px; letter-spacing: 0.18em;
+@@ -77,27 +77,26 @@
+        }
+        .btn-outline:hover { border-color: var(--cobalt); color: var(--cobalt); }
+
+        /* --- 3. CURATED VAULT SECTION --- */
+        .vault-section { padding: 120px 60px; background: var(--paper-white); position: relative; }
+        /* --- LIBRARY SECTION --- */
+        .vault-section { padding: 120px 60px; background: #FFFFFF; position: relative; }
+        .vault-header { margin-bottom: 80px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .vault-title { font-family: var(--font-display); font-size: 64px; font-weight: 300; font-style: italic; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; }
+
+        .product-card { 
+            cursor: pointer; transition: transform 0.4s ease; 
+            border-bottom: 1px solid transparent; padding-bottom: 20px;
+        }
+        .product-card:hover { transform: translateY(-8px); }
+        .product-card:hover .card-title { border-bottom: 1px solid var(--black); }
+
+        .card-img-wrap { width: 100%; aspect-ratio: 4/5; overflow: hidden; background: #eee; border-radius: 2px; margin-bottom: 24px; }
+        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+        .card-meta { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px; }
+        .card-title { font-family: var(--font-display); font-size: 28px; font-weight: 300; font-style: italic; display: inline-block; transition: 0.3s; }
+        .card-title { font-family: var(--font-display); font-size: 28px; font-weight: 300; font-style: italic; display: inline-block; }
+
+        /* --- 4. WINDOWED MODAL VIEWER --- */
+        /* --- WINDOWED MODAL --- */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 40px; }
+        .modal-window { 
+            width: 100%; max-width: 1100px; height: 85vh; background: white; display: flex; overflow: hidden; position: relative;
+@@ -111,19 +110,20 @@
+        .modal-content { width: 400px; padding: 60px 40px; overflow-y: auto; display: flex; flex-direction: column; }
+        .close-trigger { position: absolute; top: 30px; right: 30px; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; cursor: pointer; border: none; background: none; }
+
+        /* --- 5. FOOTER SAFE ZONE --- */
+        .footer-gradient {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 15vh;
+            background: linear-gradient(to top, rgba(249,249,249,1), rgba(249,249,249,0));
+            pointer-events: none; z-index: 1;
+        .footer-nav { 
+            display: flex; justify-content: space-between; align-items: center; z-index: 2; 
+            background: linear-gradient(to top, rgba(255,255,255,1) 40%, rgba(255,255,255,0) 100%);
+            padding: 40px 60px; margin-top: -100px;
+        }
+        .vault-access { display: flex; align-items: center; gap: 20px; cursor: pointer; text-decoration: none; transition: 0.3s; }
+        .vault-access:hover { transform: translateX(10px); }
+        .arrow-circle { width: 40px; height: 40px; background: var(--cobalt); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
+
+        @keyframes modalPop { from { opacity: 0; transform: scale(0.98) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+        @media (max-width: 900px) {
+            .modal-window { flex-direction: column; height: 95vh; }
+            .modal-content { width: 100%; height: auto; }
+            .vault-title { font-size: 42px; }
+        }
+    </style>
+</head>
+@@ -133,7 +133,7 @@
+<script type="text/babel">
+const { useState } = React;
+
+// ── PRODUCT TEMPLATE — Add new items to this array ───────────
+// ── PRODUCT TEMPLATE — Add new objects here to expand library ───────────
+const mockData = [
+  {
+    id: 1,
+@@ -146,75 +146,61 @@
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947518/Side_1_c8qyfs.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_2_ftdjr3.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_3_lelwzf.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_4_yst9el.png"
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947517/Side_4_yst9el.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_5_nhkzqb.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1776947516/Side_6_qt7tvh.png"
+    ]
+  },
+  {
+    id: 2,
+    title: "Women's Floral Maxi",
+    category: "Curation / Texture",
+    category: "Lifestyle / Texture",
+    mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_visually_engaging_202604251609_x9idxh.jpg", 
+    amazonLink: "https://amzn.to/41WZSqE", 
+    description: "A study in fluid elegance. Designed with a deep V-neckline and cascading floral tiers, this piece transitions seamlessly from architectural design sessions to evening settlement.",
+    description: "The Women's Floral Maxi is a study in fluid elegance. Designed with a deep V-neckline and cascading floral tiers, this piece transitions seamlessly from architecture sessions to golden-hour cocktails.",
+    slides: [
+      "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_visually_engaging_202604251609_x9idxh.jpg",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1777285800/A_bright__airy_202604251609_k52m2c.jpg",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1777285801/swap_the_dress_202604251610_oq8jqf.jpg"
+    ]
+  },
+  {
+    id: 3,
+    title: "Retro Collage Oversized",
+    category: "Streetwear / Brand",
+    mediaUrl: "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/4_n81bt4.png", 
+    amazonLink: "https://amzn.to/4n8KpgW", 
+    description: "Defined by detail. This oversized heavyweight tee features a high-contrast retro-collage design, blending hand-drawn textures and Japanese typography for a raw, DIY-punk aesthetic.",
+    slides: [
+      "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/4_n81bt4.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1777630632/2_cmrlpu.png",
+      "https://res.cloudinary.com/dsviustds/image/upload/v1777630631/1_udqb4w.png"
+    ]
+  }
+];
 
 const App = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
-
-  // Data Fetching Logic
-  useEffect(() => {
-    const fetchVaultItems = async () => {
-      let { data, error } = await supabase.from('products').select('*');
-      if (error) console.error("Vault Sync Error:", error);
-      else setProducts(data || []);
-      setLoading(false);
-    };
-    fetchVaultItems();
-  }, []);
-
-  // Internal Styles (Industrial Noir / Lux Minimalist)
-  const styles = {
-    hero: {
-      height: '100vh',
-      backgroundImage: "url('https://res.cloudinary.com/dsviustds/image/upload/v1777284354/make_it_more_202604271405_vzrvsi.jpg')",
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      padding: '60px',
-      color: '#000'
-    },
-    tagline: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 'clamp(48px, 6vw, 82px)',
-      fontWeight: '300',
-      lineHeight: '1.1',
-      marginBottom: '40px'
-    },
-    btnMain: {
-      backgroundColor: '#000',
-      color: '#FFF',
-      padding: '20px 48px',
-      border: 'none',
-      fontSize: '11px',
-      letterSpacing: '0.18em',
-      fontWeight: '600',
-      textTransform: 'uppercase',
-      cursor: 'pointer'
-    },
-    vaultSection: {
-      padding: '120px 60px',
-      backgroundColor: '#FFF'
-    },
-    productGrid: {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-      gap: '40px'
-    },
-    modalOverlay: {
-      position: 'fixed',
-      inset: 0,
-      backgroundColor: 'rgba(0,0,0,0.4)',
-      backdropFilter: 'blur(10px)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000,
-      padding: '40px'
-    }
-  };
+  const [showAuth, setShowAuth] = useState(false);
 
   return (
-    <div style={{ backgroundColor: '#FFF', minHeight: '100vh', fontFamily: "'Inter', sans-serif" }}>
-      
-      {/* --- SECTION 1: LANDING HERO --- */}
-      <section style={styles.hero}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <img src="https://res.cloudinary.com/dsviustds/image/upload/v1776948035/Whiscraft-logo_logo-Dark_1035x267_xanion.png" alt="Whiscraft" style={{ height: '30px' }} />
-          <button style={{ background: 'none', border: 'none', fontSize: '11px', fontWeight: '700', letterSpacing: '0.1em', cursor: 'pointer' }}>SIGN IN</button>
-        </div>
+    <div className="main-container">
+    <div className="main-wrapper">
 
-        <div style={{ maxWidth: '900px' }}>
-          <h1 style={styles.tagline}>Whiscraft is coming to protect the craft.</h1>
-          <button style={styles.btnMain} onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
-            Secure My Spot
-          </button>
-        </div>
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', fontWeight: '700', letterSpacing: '0.15em' }}>
-          <div><span style={{ color: '#C1FF00' }}>●</span> VAULT SYNC ACTIVE</div>
-          <div>EXPLORE CURATED VAULT ↓</div>
-        </div>
-      </section>
-
-      {/* --- SECTION 2: CURATED LIBRARY --- */}
-      <section style={styles.vaultSection} id="vault">
-        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '64px', fontWeight: '300', fontStyle: 'italic', marginBottom: '80px' }}>
-          The Curated Library.
-        </h2>
-
-        {loading ? (
-          <div style={{ textAlign: 'center', fontSize: '12px', color: '#6B6B6B' }}>SYNCING WITH VAULT...</div>
-        ) : (
-          <div style={styles.productGrid}>
-            {products.map(item => (
-              <div key={item.id} onClick={() => setSelectedProduct(item)} style={{ cursor: 'pointer' }}>
-                <div style={{ width: '100%', aspectRatio: '4/5', overflow: 'hidden', borderRadius: '2px', marginBottom: '24px', backgroundColor: '#EEE' }}>
-                  <img src={item.media_url} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        {/* --- SECTION 1: COMING SOON LANDING --- */}
+        {/* --- SECTION 1: LANDING --- */}
+        <section className="landing-hero">
+            <div className="nav-top">
+                <img src="https://res.cloudinary.com/dsviustds/image/upload/v1776948035/Whiscraft-logo_logo-Dark_1035x267_xanion.png" className="landing-logo" alt="Whiscraft Logo" />
+                <div style={{display:'flex', gap:'30px', alignItems:'center'}}>
+                    <span style={{fontSize:'10px', letterSpacing:'0.2em', fontWeight:'700'}}>VAULT STATUS: 🟢 LIVE</span>
                 </div>
-                <div style={{ fontSize: '10px', fontWeight: '700', color: '#6B6B6B', textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '0.1em' }}>{item.category}</div>
-                <div style={{ fontSize: '28px', fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic' }}>{item.title}</div>
-              </div>
-            ))}
-          </div>
+                <button style={{background:'none', border:'none', fontSize:'11px', letterSpacing:'0.1em', fontWeight:'700', cursor:'pointer'}} onClick={() => setShowAuth(true)}>SIGN IN</button>
+            </div>
+
+            <div className="hero-content">
+                <h1 className="tagline">Whiscraft is coming to protect the craft.</h1>
+                <button className="btn-main" onClick={() => window.scrollTo(0, window.innerHeight)}>Explore Curated Vault</button>
+                <button className="btn-main" onClick={() => setShowAuth(true)}>Secure My Spot</button>
+            </div>
+
+            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', z-index:2}}>
+                 <div style={{fontSize:'10px', textTransform:'uppercase', letterSpacing:'0.1em', fontWeight:'700'}}>
+                    © 2026 Whiscraft / Industrial Noir
+                 </div>
+                 <div style={{display:'flex', gap:'10px', alignItems:'center'}}>
+                    <span style={{fontSize:'11px', fontWeight:'600'}}>Scroll to View Library</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+            <div className="footer-nav">
+                 <div style={{fontSize:'10px', textTransform:'uppercase', letterSpacing:'0.15em', fontWeight:'700'}}><div style={{width:'7px', height:'7px', background:'var(--acid-green)', borderRadius:'50%', display:'inline-block', marginRight:'8px', boxShadow:'0 0 10px var(--acid-green)'}}></div> Beta Access Active</div>
+                 <div className="vault-access" onClick={() => window.scrollTo(0, window.innerHeight)}>
+                    <span style={{fontSize:'11px', fontWeight:'700', letterSpacing:'0.1em'}}>EXPLORE CURATED VAULT</span>
+                    <div className="arrow-circle">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                 </div>
+            </div>
+            <div className="footer-gradient"></div>
+        </section>
+
+        {/* --- SECTION 2: CURATED LIBRARY --- */}
+        {/* --- SECTION 2: LIBRARY --- */}
+        <section className="vault-section" id="vault">
+            <div className="vault-header">
+                <h2 className="vault-title">The Curated Library</h2>
+                <p style={{maxWidth:'250px', fontSize:'12px', color:'var(--gray-500)', lineHeight:'1.6'}}>A selection of gear and garments engineered for the high-end creative professional.</p>
+                <h2 className="vault-title">The Curated Library.</h2>
+            </div>
+
+            <div className="product-grid">
+@@ -230,6 +216,19 @@ <h2 className="vault-title">The Curated Library</h2>
+            </div>
+        </section>
+
+        {/* --- ACCOUNT OVERLAY --- */}
+        {showAuth && (
+            <div className="modal-overlay" onClick={(e) => e.target.className === 'modal-overlay' && setShowAuth(false)}>
+                <div style={{width:'380px', background:'white', padding:'60px 40px', borderRadius:'4px', position:'relative'}}>
+                    <button className="close-trigger" onClick={() => setShowAuth(false)}>[X]</button>
+                    <h2 style={{fontFamily:'var(--font-display)', fontSize:'36px', marginBottom:'32px'}}>Sign In</h2>
+                    <input type="email" placeholder="Professional Email" style={{width:'100%', padding:'18px', border:'none', borderBottom:'1px solid #000', marginBottom:'16px', outline:'none'}} />
+                    <input type="password" placeholder="Password" style={{width:'100%', padding:'18px', border:'none', borderBottom:'1px solid #000', marginBottom:'40px', outline:'none'}} />
+                    <button className="btn-main" style={{width:'100%'}} onClick={() => setShowAuth(false)}>Enter Vault</button>
+                </div>
+            </div>
         )}
-      </section>
 
-      {/* --- PRODUCT WINDOW MODAL --- */}
-      {selectedProduct && (
-        <div style={styles.modalOverlay} onClick={(e) => e.target === e.currentTarget && setSelectedProduct(null)}>
-          <div style={{ backgroundColor: '#FFF', width: '100%', maxWidth: '1100px', height: '85vh', display: 'flex', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
-            <button onClick={() => setSelectedProduct(null)} style={{ position: 'absolute', top: '30px', right: '30px', border: 'none', background: 'none', fontWeight: '800', fontSize: '10px', cursor: 'pointer' }}>CLOSE [X]</button>
-            
-            <div style={{ flex: 1.4, overflowY: 'auto', padding: '40px', backgroundColor: '#FCFCFC', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '40px', borderRight: '1px solid #E8E8E8' }}>
-              <img src={selectedProduct.media_url} alt="View" style={{ width: isExpanded ? '100%' : '450px', height: 'auto', transition: '0.5s' }} />
-              <button onClick={() => setIsExpanded(!isExpanded)} style={{ fontSize: '10px', textDecoration: 'underline', fontWeight: '700', cursor: 'pointer', border: 'none', background: 'none' }}>
-                {isExpanded ? '[–] REDUCE VIEW' : '[+] EXPAND IMAGES'}
-              </button>
-            </div>
+        {/* --- PRODUCT WINDOW MODAL --- */}
+        {selectedProduct && (
+            <div className="modal-overlay" onClick={(e) => e.target.className === 'modal-overlay' && setSelectedProduct(null)}>
+@@ -240,7 +239,7 @@ <h2 className="vault-title">The Curated Library</h2>
+                        <div style={{width:'100%', display:'flex', justifyContent:'space-between', marginBottom:'10px'}}>
+                            <span style={{fontSize:'10px', fontWeight:'700', color:'var(--gray-500)'}}>GALLERY VIEW</span>
+                            <span style={{fontSize:'10px', letterSpacing:'0.1em', cursor:'pointer', textDecoration:'underline', fontWeight:'700'}} onClick={() => setIsExpanded(!isExpanded)}>
+                                {isExpanded ? "[–] MINIMIZE IMAGES" : "[+] EXPAND IMAGES"}
+                                {isExpanded ? "[–] REDUCE VIEW" : "[+] EXPAND IMAGES"}
+                            </span>
+                        </div>
+                        {selectedProduct.slides.map((url, i) => (
+@@ -259,8 +258,8 @@ <h1 style={{fontFamily:'var(--font-display)', fontSize:'42px', margin:'20px 0',
+                        </div>
 
-            <div style={{ width: '400px', padding: '60px 40px', display: 'flex', flexDirection: 'column' }}>
-              <span style={{ color: '#2E5BFF', fontSize: '10px', fontWeight: '700', letterSpacing: '0.2em' }}>{selectedProduct.category}</span>
-              <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '42px', fontStyle: 'italic', margin: '20px 0' }}>{selectedProduct.title}</h1>
-              <p style={{ fontSize: '14px', lineHeight: '1.8', color: '#6B6B6B', marginBottom: '40px' }}>{selectedProduct.description}</p>
-              
-              <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <a href={selectedProduct.amazon_link} target="_blank" rel="noreferrer" style={{ ...styles.btnMain, textAlign: 'center', textDecoration: 'none' }}>Take Me To Product</a>
-                <button style={{ padding: '18px', background: 'none', border: '1px solid #000', fontSize: '11px', fontWeight: '600', cursor: 'pointer' }}>Add to Shopping List</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default App;
+                        <div style={{marginTop:'40px', paddingTop:'30px', borderTop:'1px solid var(--gray-200)'}}>
+                            <span style={{fontSize:'10px', fontWeight:'700', letterSpacing:'0.1em', textTransform:'uppercase'}}>Vault Security</span>
+                            <p style={{fontSize:'12px', color:'#999', marginTop:'12px'}}>Sign in to sync your curated lists with the Whiscraft Drive.</p>
+                            <span style={{fontSize:'10px', fontWeight:'700', letterSpacing:'0.1em', textTransform:'uppercase'}}>Project Management</span>
+                            <p style={{fontSize:'12px', color:'#999', marginTop:'12px'}}>Sign in to organize your curated gear into client-specific project folders.</p>
+                        </div>
+                    </div>
+                </div>
