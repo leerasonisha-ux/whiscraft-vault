@@ -15,7 +15,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchVaultItems = async () => {
-      let { data, error } = await supabase.from('products').select('*');
+      let { data, error } = await supabase.from('Products').select('*');
       if (error) console.error("Vault Sync Error:", error);
       else setProducts(data || []);
       setLoading(false);
